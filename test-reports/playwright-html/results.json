@@ -1,0 +1,210 @@
+{
+  "config": {
+    "configFile": "C:\\Users\\Pankaj\\LQPlaywrightProject\\playwright.config.js",
+    "rootDir": "C:/Users/Pankaj/LQPlaywrightProject/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "test-reports/playwright-html",
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-reports/playwright-html/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "C:/Users/Pankaj/LQPlaywrightProject/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "Mobile Chrome",
+        "name": "Mobile Chrome",
+        "testDir": "C:/Users/Pankaj/LQPlaywrightProject/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 0
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "3way",
+    "version": "1.56.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "01_mob_home\\mobHomePage.spec.js",
+      "file": "01_mob_home/mobHomePage.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Complete Home Page Flow (Schedule Demo → Try for Free → Link Verification)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 0,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "Mobile Chrome",
+              "projectName": "Mobile Chrome",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28123,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "🚀 Starting Schedule a Demo form automation...\n"
+                    },
+                    {
+                      "text": "🌐 Opening URL: https://www.learnqoch.com\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 3s...\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 3s...\n"
+                    },
+                    {
+                      "text": "🧭 Scrolling to bring 'Schedule a Demo' button into view...\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 2s...\n"
+                    },
+                    {
+                      "text": "✨ Highlighting and clicking 'Schedule a Demo'...\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 2s...\n"
+                    },
+                    {
+                      "text": "✅ Navigated to Schedule a Demo page!\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 2s...\n"
+                    },
+                    {
+                      "text": "✏️ Starting Schedule Demo form fill...\n"
+                    },
+                    {
+                      "text": "🧾 Report Mode: INDIVIDUAL\n"
+                    },
+                    {
+                      "text": "📂 Reports saved in: test-reports\\FieldReport\n"
+                    },
+                    {
+                      "text": "✅ Filled: First Name\n"
+                    },
+                    {
+                      "text": "✅ Filled: Last Name\n"
+                    },
+                    {
+                      "text": "✅ Filled: Email\n"
+                    },
+                    {
+                      "text": "✅ Filled: Designation\n"
+                    },
+                    {
+                      "text": "✅ Filled: Solution\n"
+                    },
+                    {
+                      "text": "✅ Filled: Institute\n"
+                    },
+                    {
+                      "text": "✅ Filled: Phone Number\n"
+                    },
+                    {
+                      "text": "✅ Filled: City\n"
+                    },
+                    {
+                      "text": "📄 Field-Level HTML Report generated: test-reports\\FieldReport\\FieldReport_FIELD_REPORT_2025-11-13_18-22-05-513.html\n"
+                    },
+                    {
+                      "text": "📊 CSV Report generated: test-reports\\FieldReport\\FieldReport_2025-11-13_18-22-05-513.csv\n"
+                    },
+                    {
+                      "text": "💚 Checkbox selected.\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 1s...\n"
+                    },
+                    {
+                      "text": "📤 Submitting Schedule Demo form...\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 6s...\n"
+                    },
+                    {
+                      "text": "🔍 Checking thank-you message...\n"
+                    },
+                    {
+                      "text": "❌ ERROR: Schedule Demo success text not found!\n"
+                    },
+                    {
+                      "text": "\n🎯 ✅ Full Home Page test completed successfully!\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-11-13T12:51:47.738Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "61d485a3bcc1b1faa367-a09d1b8293731f10ac55",
+          "file": "01_mob_home/mobHomePage.spec.js",
+          "line": 4,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2025-11-13T12:51:42.629Z",
+    "duration": 33994.25600000005,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

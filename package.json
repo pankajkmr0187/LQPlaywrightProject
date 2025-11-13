@@ -1,0 +1,29 @@
+{
+  "name": "lqplaywrightproject",
+  "version": "1.0.0",
+  "description": "Mobile Automation Framework for LearnQoch Website",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:all": "node runAllTests.js",
+    "test:home": "npx playwright test tests/01_mob_home",
+    "test:aboutus": "npx playwright test tests/02_mob_aboutus",
+    "test:k12": "npx playwright test tests/03_mob_k12", 
+    "test:higher": "npx playwright test tests/04_mob_highereducation",
+    "test:blogs": "npx playwright test tests/05_mob_blogs",
+    "test:support": "npx playwright test tests/06_mob_support",
+    "device:iphone13": "npx playwright test --project=\"iPhone 13\"",
+    "device:iphone12": "npx playwright test --project=\"iPhone 12\"",
+    "device:iphone14promax": "npx playwright test --project=\"iPhone 14 Pro Max\"",
+    "device:galaxys8": "npx playwright test --project=\"Galaxy S8\"",
+    "device:pixel5": "npx playwright test --project=\"Pixel 5\"",
+    "report": "npx playwright show-report"
+  },
+  "keywords": ["playwright", "automation", "testing", "mobile"],
+  "author": "Pankaj",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.40.0"
+  }
+}
