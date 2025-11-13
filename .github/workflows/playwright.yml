@@ -1,8 +1,8 @@
-name: test
+name: Playwright Tests
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   workflow_dispatch:
 
 jobs:
@@ -10,23 +10,41 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # -----------------------------
+      # CHECKOUT
+      # -----------------------------
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # -----------------------------
+      # NODE SETUP
+      # -----------------------------
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
+      # -----------------------------
+      # INSTALL PROJECT PACKAGES
+      # -----------------------------
       - name: Install dependencies
         run: npm ci
 
+      # -----------------------------
+      # INSTALL PLAYWRIGHT BROWSERS
+      # -----------------------------
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Run Playwright Tests
-        run: npx playwright test
+      # -----------------------------
+      # RUN PLAYWRIGHT TESTS (HEADLESS)
+      # -----------------------------
+      - name: Run Playwright Tests (Headless)
+        run: npx playwright test tests/01_mob_home/mobHomePage.spec.js --headless
 
+      # -----------------------------
+      # SEND TEST REPORT EMAIL
+      # -----------------------------
       - name: Send Test Report Email
         run: node .vscode/sendMail.js
         env:
