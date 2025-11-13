@@ -1,10 +1,9 @@
-name: Run Playwright Tests
+name: test
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   test:
@@ -12,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -20,20 +19,20 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
       - name: Run Playwright Tests
-        run: npx playwright test --reporter=html
+        run: npx playwright test
 
       - name: Send Test Report Email
-        run: node sendMail.js
+        run: node .vscode/sendMail.js
         env:
-          EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
-          EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
-          EMAIL_SECURE: ${{ secrets.EMAIL_SECURE }}
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          EMAIL_SECURE: ${{ secrets.EMAIL_SECURE }}
+          EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+          EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
