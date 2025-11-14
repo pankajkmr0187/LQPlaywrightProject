@@ -58,11 +58,14 @@ jobs:
       # SEND REPORT EMAIL
       # --------------------------------------
       - name: Send Test Report Email
-        run: node .vscode/sendMail.js
-        env:
-          EMAIL_USER: ${{ secrets.EMAIL_USER }}
-          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-          EMAIL_TO: ${{ secrets.EMAIL_TO }}
-          EMAIL_SECURE: ${{ secrets.EMAIL_SECURE }}
-          EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
-          EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+  run: node .vscode/sendMail.js
+  env:
+      EMAIL_USER: ${{ secrets.EMAIL_USER }}
+      EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+      EMAIL_TO: ${{ secrets.EMAIL_TO }}
+      EMAIL_CC: ${{ secrets.EMAIL_CC }}
+      EMAIL_BCC: ${{ secrets.EMAIL_BCC }}
+      EMAIL_SECURE: ${{ secrets.EMAIL_SECURE }}
+      EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+      EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+

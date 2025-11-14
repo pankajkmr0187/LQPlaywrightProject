@@ -53,8 +53,7 @@ const __dirname = path.dirname(__filename);
   to: EMAIL_TO,                           // multiple TO supported
   cc: process.env.EMAIL_CC || "",         // optional CC
   bcc: process.env.EMAIL_BCC || "",       // optional BCC
-  subject: `LQ_Website Automation Test Report - ${new Date().toLocaleString()}`,
-  text: "",
+  subject: `Playwright CI – LQ Website Mob Automation - ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}`,
   html: "",
   attachments: [],
 };
