@@ -1,11 +1,14 @@
-// CommonJS (safe for GitHub Actions)
-const fs = require("fs");
-const path = require("path");
-const nodemailer = require("nodemailer");
+// ESM compatible imports
+import fs from "fs";
+import path from "path";
+import nodemailer from "nodemailer";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 (async () => {
   try {
-    // --- Read env (set in workflow secrets) ---
     const {
       EMAIL_USER,
       EMAIL_PASS,
@@ -20,7 +23,6 @@ const nodemailer = require("nodemailer");
       process.exit(1);
     }
 
-    // --- Possible report locations (check in order) ---
     const projectRoot = process.cwd();
     const possibleReports = [
       path.join(projectRoot, "test-reports", "playwright-html", "index.html"),
@@ -36,18 +38,16 @@ const nodemailer = require("nodemailer");
       }
     }
 
-    // --- Prepare transporter ---
     const transporter = nodemailer.createTransport({
       host: EMAIL_HOST || "smtp.gmail.com",
       port: EMAIL_PORT ? Number(EMAIL_PORT) : 587,
-      secure: EMAIL_SECURE === "true" || EMAIL_SECURE === "1" ? true : false,
+      secure: EMAIL_SECURE === "true" || EMAIL_SECURE === "1",
       auth: {
         user: EMAIL_USER,
         pass: EMAIL_PASS,
       },
     });
 
-    // --- Compose mail ---
     const mailOptions = {
       from: `"Playwright CI" <${EMAIL_USER}>`,
       to: EMAIL_TO,
@@ -59,9 +59,11 @@ const nodemailer = require("nodemailer");
 
     if (foundPath) {
       const ext = path.extname(foundPath).toLowerCase();
+
       if (ext === ".html") {
-        mailOptions.text = "Playwright HTML report attached. Open in a browser to view details.";
-        mailOptions.html = `<p>Playwright HTML report attached. <br/>Download and open <b>index.html</b> to view.</p>`;
+        mailOptions.text =
+          "Playwright HTML report attached. Open in browser to view.";
+        mailOptions.html = `<p>HTML report attached: <b>index.html</b></p>`;
         mailOptions.attachments.push({
           filename: "playwright-report.html",
           path: foundPath,
@@ -70,36 +72,26 @@ const nodemailer = require("nodemailer");
       } else if (ext === ".json") {
         const jsonContent = fs.readFileSync(foundPath, "utf8");
         mailOptions.text = "Playwright JSON results attached.";
-        mailOptions.html = `<p>Playwright JSON results attached.</p>`;
         mailOptions.attachments.push({
           filename: "results.json",
           content: jsonContent,
           contentType: "application/json",
         });
-      } else {
-        // generic attach
-        mailOptions.text = "Playwright report attached.";
-        mailOptions.attachments.push({
-          filename: path.basename(foundPath),
-          path: foundPath,
-        });
       }
     } else {
-      // fallback: no report found
-      mailOptions.text =
-        "Playwright finished but no HTML report was found at expected locations. Check the CI logs.";
-      mailOptions.html = `<p>Playwright finished but no HTML report was found at expected locations.</p>
-                         <p>Checked: ${possibleReports.join("<br/>")}</p>`;
+      mailOptions.text = "No report found. Check CI logs.";
+      mailOptions.html = `<p>No report found. Checked:<br>${possibleReports.join(
+        "<br/>"
+      )}</p>`;
     }
 
-    // --- Send mail ---
-    console.log("Sending email to:", EMAIL_TO, "attachment:", foundPath || "none");
+    console.log("Sending email to:", EMAIL_TO, "attachment:", foundPath);
     const info = await transporter.sendMail(mailOptions);
-    console.log("Email sent:", info.messageId || info);
+    console.log("Email sent:", info.messageId);
 
     process.exit(0);
   } catch (err) {
-    console.error("Error sending email:", err);
+    console.error("Error:", err);
     process.exit(1);
   }
 })();
