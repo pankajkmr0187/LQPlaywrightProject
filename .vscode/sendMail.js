@@ -48,14 +48,16 @@ const __dirname = path.dirname(__filename);
       },
     });
 
-    const mailOptions = {
-      from: `"Playwright CI" <${EMAIL_USER}>`,
-      to: EMAIL_TO,
-      subject: `Playwright Test Report - ${new Date().toLocaleString()}`,
-      text: "",
-      html: "",
-      attachments: [],
-    };
+   const mailOptions = {
+  from: `"Playwright CI" <${EMAIL_USER}>`,
+  to: EMAIL_TO,                           // multiple TO supported
+  cc: process.env.EMAIL_CC || "",         // optional CC
+  bcc: process.env.EMAIL_BCC || "",       // optional BCC
+  subject: `LQ_Website Automation Test Report - ${new Date().toLocaleString()}`,
+  text: "",
+  html: "",
+  attachments: [],
+};
 
     if (foundPath) {
       const ext = path.extname(foundPath).toLowerCase();
