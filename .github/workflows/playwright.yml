@@ -26,11 +26,12 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: run: npx playwright test tests/01_mob_home/mobHomePage.spec.js
-        run: npm test
+      # 👉 ALWAYS run ONLY mobHome test
+      - name: Run mobHomePage Test
+        run: npx playwright test tests/01_mob_home/mobHomePage.spec.js
 
-      # CREATE ZIP REPORT
-      - name: Zip test report
+      # ZIP the report
+      - name: Zip report
         run: |
           cd test-reports/playwright-html
           zip -r ../../report.zip .
@@ -43,5 +44,4 @@ jobs:
           EMAIL_HOST: "smtp.gmail.com"
           EMAIL_PORT: "465"
           EMAIL_SECURE: "true"
-        run: |
-          node .vscode/sendMail.js
+        run: node .vscode/sendMail.js
