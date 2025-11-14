@@ -3,17 +3,21 @@ name: Playwright Tests
 on:
   push:
     branches: ["main"]
+
   workflow_dispatch:
+
+  schedule:
+    - cron: "30 3 * * *"   # Run daily at 9:00 AM IST
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     env:
-      # Tell Playwright to use cached browsers
       PLAYWRIGHT_BROWSERS_PATH: ~/.cache/ms-playwright
 
     steps:
+
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -26,7 +30,7 @@ jobs:
         run: npm ci
 
       # --------------------------------------
-      # CACHE PLAYWRIGHT BROWSERS (REAL FIX)
+      # CACHE PLAYWRIGHT BROWSERS
       # --------------------------------------
       - name: Cache Playwright Browsers
         uses: actions/cache@v3
@@ -37,7 +41,7 @@ jobs:
             ${{ runner.os }}-pw-
 
       # --------------------------------------
-      # INSTALL ONLY IF CACHE NOT FOUND
+      # INSTALL BROWSERS ONLY IF CACHE NOT FOUND
       # --------------------------------------
       - name: Install Playwright Browsers
         run: |
@@ -49,23 +53,22 @@ jobs:
           fi
 
       # --------------------------------------
-      # RUN PLAYWRIGHT TEST
+      # RUN ALL PLAYWRIGHT TESTS
       # --------------------------------------
       - name: Run Playwright Tests
-        run: npx playwright test tests/01_mob_home/mobHomePage.spec.js
+        run: npx playwright test
 
       # --------------------------------------
       # SEND REPORT EMAIL
       # --------------------------------------
       - name: Send Test Report Email
-  run: node .vscode/sendMail.js
-  env:
-      EMAIL_USER: ${{ secrets.EMAIL_USER }}
-      EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-      EMAIL_TO: ${{ secrets.EMAIL_TO }}
-      EMAIL_CC: ${{ secrets.EMAIL_CC }}
-      EMAIL_BCC: ${{ secrets.EMAIL_BCC }}
-      EMAIL_SECURE: ${{ secrets.EMAIL_SECURE }}
-      EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
-      EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
-
+        run: node .vscode/sendMail.js
+        env:
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          EMAIL_CC: ${{ secrets.EMAIL_CC }}
+          EMAIL_BCC: ${{ secrets.EMAIL_BCC }}
+          EMAIL_SECURE: ${{ secrets.EMAIL_SECURE }}
+          EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+          EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
