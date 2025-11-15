@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>FieldReport - Field Level Report</title>
+<style>
+  body { font-family: Arial; margin: 20px; background:#f5f7fa; }
+
+  h2 { margin-bottom: 12px; }
+
+  /* Summary Cards */
+  .summary-container {
+    display:flex; gap:20px; margin-bottom:20px;
+  }
+  .card {
+    padding:18px 25px; border-radius:12px;
+    font-size:18px; font-weight:bold; color:#fff;
+    box-shadow:0 2px 6px rgba(0,0,0,0.15);
+  }
+  .success-card { background:#28a745; }
+  .fail-card { background:#dc3545; }
+  .total-card { background:#007bff; }
+
+  /* Table */
+  table {
+    width:100%; border-collapse:collapse;
+    background:white; box-shadow:0 2px 5px rgba(0,0,0,0.12);
+  }
+  th, td {
+    border:1px solid #ddd; padding:10px;
+    font-size:14px;
+  }
+  th { background:#222; color:#fff; }
+
+  tr.pass { background:#d4ffd4; }
+  tr.fail { background:#ffd4d4; }
+
+  /* Badges */
+  .badge {
+    padding:5px 12px; border-radius:20px;
+    color:white; font-weight:bold; font-size:12px;
+  }
+  .success { background:#28a745; }
+  .failed { background:#dc3545; }
+
+  /* Screenshot Thumbnail */
+  .thumb {
+    border-radius:5px; border:1px solid #444;
+    transition:transform .2s ease;
+  }
+  .thumb:hover { transform:scale(1.05); }
+
+</style>
+</head>
+<body>
+
+  <h2>📋 FieldReport - Field-Level Form Report</h2>
+
+  <!-- Summary Cards -->
+  <div class="summary-container">
+    <div class="card success-card">Success: 8</div>
+    <div class="card fail-card">Failed: 0</div>
+    <div class="card total-card">Total Fields: 8</div>
+  </div>
+
+  <table>
+    <tr>
+      <th>#</th>
+      <th>Field Name</th>
+      <th>Status</th>
+      <th>Error</th>
+      <th>Timestamp</th>
+      <th>Screenshot</th>
+    </tr>
+    
+      <tr class="pass">
+        <td>1</td>
+        <td>First Name</td>
+        <td><span class="badge success">Success</span></td>
+        <td>-</td>
+        <td>15/11/2025, 2:19:11 pm</td>
+        <td>
+          
+        </td>
+      </tr>
+      <tr class="pass">
+        <td>2</td>
+        <td>Last Name</td>
+        <td><span class="badge success">Success</span></td>
+        <td>-</td>
+        <td>15/11/2025, 2:19:12 pm</td>
+        <td>
+          
+        </td>
+      </tr>
+      <tr class="pass">
+        <td>3</td>
+        <td>Email</td>
+        <td><span class="badge success">Success</span></td>
+        <td>-</td>
+        <td>15/11/2025, 2:19:12 pm</td>
+        <td>
+          
+        </td>
+      </tr>
+      <tr class="pass">
+        <td>4</td>
+        <td>Designation</td>
+        <td><span class="badge success">Success</span></td>
+        <td>-</td>
+        <td>15/11/2025, 2:19:12 pm</td>
+        <td>
+          
+        </td>
+      </tr>
+      <tr class="pass">
+        <td>5</td>
+        <td>Solution</td>
+        <td><span class="badge success">Success</span></td>
+        <td>-</td>
+        <td>15/11/2025, 2:19:13 pm</td>
+        <td>
+          
+        </td>
+      </tr>
+      <tr class="pass">
+        <td>6</td>
+        <td>Institute</td>
+        <td><span class="badge success">Success</span></td>
+        <td>-</td>
+        <td>15/11/2025, 2:19:13 pm</td>
+        <td>
+          
+        </td>
+      </tr>
+      <tr class="pass">
+        <td>7</td>
+        <td>Phone Number</td>
+        <td><span class="badge success">Success</span></td>
+        <td>-</td>
+        <td>15/11/2025, 2:19:13 pm</td>
+        <td>
+          
+        </td>
+      </tr>
+      <tr class="pass">
+        <td>8</td>
+        <td>City</td>
+        <td><span class="badge success">Success</span></td>
+        <td>-</td>
+        <td>15/11/2025, 2:19:14 pm</td>
+        <td>
+          
+        </td>
+      </tr>
+  </table>
+
+</body>
+</html>

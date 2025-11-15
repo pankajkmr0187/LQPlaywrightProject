@@ -221,14 +221,14 @@ export class MobHomePage extends BasePage {
     const reportUtils = new ReportUtils(this.page, "FieldReport");
 
     const fields = [
-      { name: "First Name", selector: 'input[name="your-fname"]', value: "Pankaj" },
-      { name: "Last Name", selector: 'input[name="your-lname"]', value: "Kumar" },
-      { name: "Email", selector: 'input[name="your-email"]', value: "pankaj.kumar@example.com" },
+      { name: "First Name", selector: 'input[name="your-fname"]', value: "LQMob" },
+      { name: "Last Name", selector: 'input[name="your-lname"]', value: "Test" },
+      { name: "Email", selector: 'input[name="your-email"]', value: "learnqoch@lq.com" },
       { name: "Designation", selector: 'select[name="designation"]', value: "Principal", isSelect: true },
       { name: "Solution", selector: 'select[name="select-solution"]', value: "ERP", isSelect: true },
       { name: "Institute", selector: 'input[name="institute"]', value: "LearnQoch Academy" },
-      { name: "Phone Number", selector: 'input[name="phone-number"]', value: "9876543210" },
-      { name: "City", selector: 'input[name="city"]', value: "Pune" },
+      { name: "Phone Number", selector: 'input[name="phone-number"]', value: "1234567890" },
+      { name: "City", selector: 'input[name="city"]', value: "Mumbai" },
     ];
 
     for (const field of fields) {
