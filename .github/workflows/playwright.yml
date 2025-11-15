@@ -5,7 +5,7 @@ on:
     branches: ["main"]
   workflow_dispatch:
   schedule:
-    - cron: "30 0 * * *" # Runs at 6:00 AM IST
+    - cron: "30 0 * * *"  # Runs at 6:00 AM IST
 
 jobs:
   test:
@@ -29,18 +29,34 @@ jobs:
       - name: Run Mobile Home Test
         run: npx playwright test tests/01_mob_home/mobHomePage.spec.js
 
+      # --- PASS STATUS ---
       - name: Mark test passed
         if: ${{ success() }}
         run: |
           mkdir -p test-results
           echo "PASSED" > test-results/status.txt
 
+      # --- FAIL STATUS ---
       - name: Mark test failed
         if: ${{ failure() }}
         run: |
           mkdir -p test-results
           echo "FAILED" > test-results/status.txt
 
+      # --- ZIP FULL REPORT ---
+      - name: Zip full custom report
+        run: |
+          cd test-reports
+          zip -r ../playwright_full_report.zip .
+
+      # --- UPLOAD ARTIFACT TO GITHUB ---
+      - name: Upload Full Report Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Full-Playwright-Report
+          path: playwright_full_report.zip
+
+      # --- SEND EMAIL WITHOUT ATTACHMENT (LINK ONLY) ---
       - name: Send Email Report
         env:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
@@ -48,7 +64,5 @@ jobs:
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
           EMAIL_CC: ${{ secrets.EMAIL_CC }}
           EMAIL_BCC: ${{ secrets.EMAIL_BCC }}
-          EMAIL_HOST: "smtp.gmail.com"
-          EMAIL_PORT: "465"
-          EMAIL_SECURE: "true"
+          ARTIFACT_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: node .vscode/sendMail.js
