@@ -13,10 +13,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: "18"
 
@@ -29,34 +29,30 @@ jobs:
       - name: Run Mobile Home Test
         run: npx playwright test tests/01_mob_home/mobHomePage.spec.js
 
-      # --- PASS STATUS ---
       - name: Mark test passed
         if: ${{ success() }}
         run: |
           mkdir -p test-results
           echo "PASSED" > test-results/status.txt
 
-      # --- FAIL STATUS ---
       - name: Mark test failed
         if: ${{ failure() }}
         run: |
           mkdir -p test-results
           echo "FAILED" > test-results/status.txt
 
-      # --- ZIP FULL REPORT ---
       - name: Zip full custom report
         run: |
           cd test-reports
           zip -r ../playwright_full_report.zip .
 
-      # --- UPLOAD ARTIFACT TO GITHUB ---
       - name: Upload Full Report Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Full-Playwright-Report
           path: playwright_full_report.zip
+          compression-level: 0
 
-      # --- SEND EMAIL WITHOUT ATTACHMENT (LINK ONLY) ---
       - name: Send Email Report
         env:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
