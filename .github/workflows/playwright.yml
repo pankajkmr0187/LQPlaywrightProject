@@ -5,7 +5,7 @@ on:
     branches: ["main"]
   workflow_dispatch:
   schedule:
-    - cron: "30 0 * * *"  # Runs 6:00 AM IST
+    - cron: "30 0 * * *" # Runs at 6:00 AM IST
 
 jobs:
   test:
@@ -26,33 +26,21 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      # -----------------------------
-      # RUN THE TESTS
-      # -----------------------------
       - name: Run Mobile Home Test
         run: npx playwright test tests/01_mob_home/mobHomePage.spec.js
 
-      # -----------------------------
-      # Capture PASS Case
-      # -----------------------------
       - name: Mark test passed
         if: ${{ success() }}
         run: |
           mkdir -p test-results
           echo "PASSED" > test-results/status.txt
 
-      # -----------------------------
-      # Capture FAIL Case
-      # -----------------------------
       - name: Mark test failed
         if: ${{ failure() }}
         run: |
           mkdir -p test-results
           echo "FAILED" > test-results/status.txt
 
-      # -----------------------------
-      # SEND EMAIL
-      # -----------------------------
       - name: Send Email Report
         env:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
