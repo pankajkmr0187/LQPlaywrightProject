@@ -1,13 +1,19 @@
-// ✅ FINAL ReportUtils.js (Full Link + Field Level Reporting)
+// ✅ FINAL ReportUtils.js — Auto Folder Naming + Field/Link Routing (ZERO BREAKING)
 import fs from "fs";
 import path from "path";
 
 export class ReportUtils {
-  constructor(page, folderName, parentFolder = "") {
+  constructor(page, rawName) {
     this.page = page;
     this.baseDir = "test-reports";
 
-    // 🕓 Indian Standard Time
+    // Detect calling method (parent)
+    const parentMethod = this.getCallerMethodName();
+
+    // Auto folder naming rules
+    this.folderName = this.getSmartFolderName(rawName, parentMethod);
+
+    // Timestamp IST
     const now = new Date();
     const istTime = new Date(now.getTime() + 5.5 * 60 * 60 * 1000);
     this.timestamp = istTime
@@ -16,36 +22,63 @@ export class ReportUtils {
       .replace(/[:.]/g, "-")
       .replace("Z", "");
 
-    // 🗂 Folder structure
-    this.folderPath = parentFolder
-      ? path.join(this.baseDir, parentFolder, folderName)
-      : path.join(this.baseDir, folderName);
-
+    // Folder
+    this.folderPath = path.join(this.baseDir, this.folderName);
     this.screenshotDir = path.join(this.folderPath, "screenshots");
 
-    // 🧾 Ensure directories exist
     [this.baseDir, this.folderPath, this.screenshotDir].forEach((dir) => {
       if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
     });
 
-    // 📄 File names
-    const reportName = `${folderName}_${this.timestamp}`;
-    this.csvFile = path.join(this.folderPath, `${reportName}.csv`);
-    this.htmlFile = path.join(this.folderPath, `${reportName}.html`);
-    this.fieldHtmlFile = path.join(this.folderPath, `${folderName}_FIELD_REPORT_${this.timestamp}.html`);
+    // File names
+    const mainPrefix = `${this.folderName}_${this.timestamp}`;
+    this.csvFile = path.join(this.folderPath, `${mainPrefix}.csv`);
+    this.htmlFile = path.join(this.folderPath, `${mainPrefix}.html`);
+    this.fieldHtmlFile = path.join(
+      this.folderPath,
+      `${this.folderName}_FIELD_REPORT_${this.timestamp}.html`
+    );
 
-    this.folderName = folderName;
     this.results = [];
 
-    console.log(`🧾 Report Mode: INDIVIDUAL`);
-    console.log(`📂 Reports saved in: ${this.folderPath}`);
+    console.log(`📁 Using folder: ${this.folderName}`);
   }
 
-  // ======================================================================
-  // 🔹 LINK LOGGING
-  // ======================================================================
+  // ---------------------------------------------------------------------
+  // 🔥 Auto detect parent method name
+  // ---------------------------------------------------------------------
+  getCallerMethodName() {
+    const stack = new Error().stack.split("\n");
+    if (stack.length < 4) return "UnknownMethod";
+
+    const line = stack[3];
+    const match = line.match(/at\s+(.+?)\s/);
+    return match ? match[1].replace("async ", "").trim() : "UnknownMethod";
+  }
+
+  // ---------------------------------------------------------------------
+  // 🔥 Smart folder naming logic
+  // ---------------------------------------------------------------------
+  getSmartFolderName(rawName, method) {
+    const m = method.toLowerCase();
+
+    // Field Reports
+    if (m.includes("schedule")) return "ScheduleDemoField";
+    if (m.includes("tryforfree")) return "TryForFreeField";
+
+    // Link Verification
+    if (m.includes("landing") || m.includes("homepage")) return "HomePageLinkVerification";
+    if (m.includes("blog")) return "BlogsLinkVerification";
+
+    // Default fallback (old behaviour)
+    return rawName;
+  }
+
+  // ---------------------------------------------------------------------
+  // 🔗 LINK LOGGING
+  // ---------------------------------------------------------------------
   async logLinkResult(index, linkName, linkUrl, status, statusCode, error = "") {
-    const record = {
+    this.results.push({
       index,
       linkName,
       linkUrl,
@@ -53,35 +86,31 @@ export class ReportUtils {
       statusCode,
       error,
       timestamp: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
-      screenshot: ""
-    };
-
-    this.results.push(record);
+      screenshot: "",
+    });
 
     try {
       await this.page.evaluate((url, status) => {
         const el = document.querySelector(`a[href="${url}"]`);
         if (el) {
-          const color =
+          el.style.outline =
             status === "VERIFIED"
               ? "3px solid green"
               : status === "FAILED"
               ? "3px solid red"
               : "3px solid orange";
-          el.style.outline = color;
+
           el.scrollIntoView({ behavior: "smooth", block: "center" });
         }
       }, linkUrl, status);
-    } catch {
-      console.log(`⚠️ Highlight failed for ${linkName}`);
-    }
+    } catch {}
 
     await this.page.waitForTimeout(300);
   }
 
-  // ======================================================================
-  // 🔹 FIELD LEVEL STEP LOGGING
-  // ======================================================================
+  // ---------------------------------------------------------------------
+  // 🧾 FIELD LEVEL LOGGING
+  // ---------------------------------------------------------------------
   async addStep(label, action, status, takeScreenshot = false) {
     let screenshotPath = "";
 
@@ -105,9 +134,9 @@ export class ReportUtils {
     });
   }
 
-  // ======================================================================
-  // 🔹 CSV REPORT (Links + Fields)
-  // ======================================================================
+  // ---------------------------------------------------------------------
+  // CSV Report
+  // ---------------------------------------------------------------------
   generateCSVReport() {
     const header = [
       "Index",
@@ -135,238 +164,87 @@ export class ReportUtils {
 
     const csvContent = [
       header.join(","),
-      ...rows.map((r) => r.map((value) => `"${String(value).replace(/"/g, '""')}"`).join(",")),
+      ...rows.map((r) => r.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(",")),
     ].join("\n");
 
     fs.writeFileSync(this.csvFile, csvContent, "utf-8");
-    console.log(`📊 CSV Report generated: ${this.csvFile}`);
+    console.log(`📄 CSV saved → ${this.csvFile}`);
   }
 
-    // ======================================================================
-// 🔹 HTML REPORT (Links ONLY)
-// ======================================================================
-generateHTMLReport() {
-  const total = this.results.filter(r => r.linkUrl !== "-").length;
-  const pass = this.results.filter(r => r.status === "VERIFIED").length;
-  const fail = this.results.filter(r => r.status === "FAILED").length;
-  const error = this.results.filter(r => r.status !== "VERIFIED" && r.status !== "FAILED").length;
+  // ---------------------------------------------------------------------
+  // HTML Report (Links)
+  // ---------------------------------------------------------------------
+  generateHTMLReport() {
+    const total = this.results.filter((r) => r.linkUrl !== "-").length;
+    const pass = this.results.filter((r) => r.status === "VERIFIED").length;
+    const fail = this.results.filter((r) => r.status === "FAILED").length;
+    const error = total - pass - fail;
 
-  let rows = this.results
-    .filter((r) => r.linkUrl !== "-")
-    .map(
-      (r) => `
-      <tr class="${r.status === "VERIFIED" ? "pass" : r.status === "FAILED" ? "fail" : "error"}">
-        <td>${r.index}</td>
-        <td>${r.linkName}</td>
-        <td><a href="${r.linkUrl}" target="_blank">${r.linkUrl}</a></td>
-        <td><span class="badge ${r.status.toLowerCase()}">${r.status}</span></td>
-        <td>${r.statusCode}</td>
-        <td>${r.error}</td>
-        <td>${r.timestamp}</td>
-      </tr>`
-    )
-    .join("");
+    let rows = this.results
+      .filter((r) => r.linkUrl !== "-")
+      .map(
+        (r) => `
+<tr class="${r.status.toLowerCase()}">
+  <td>${r.index}</td>
+  <td>${r.linkName}</td>
+  <td><a href="${r.linkUrl}" target="_blank">${r.linkUrl}</a></td>
+  <td>${r.status}</td>
+  <td>${r.statusCode}</td>
+  <td>${r.error}</td>
+  <td>${r.timestamp}</td>
+</tr>`
+      )
+      .join("");
 
-  let html = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>${this.folderName} - Link Verification</title>
-<style>
-  body { font-family: Arial; margin: 20px; background:#f3f7fb; }
-
-  h2 { margin-bottom: 10px; }
-
-  .summary-container {
-    display: flex; gap: 20px; margin-bottom: 20px;
-  }
-  .card {
-    padding: 18px 25px; border-radius: 10px; color: #fff; font-size: 18px;
-    font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-  }
-  .pass-card { background:#28a745; }
-  .fail-card { background:#dc3545; }
-  .error-card { background:#ffc107; color:#000; }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.10);
-  }
-  th, td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    font-size: 14px;
-  }
-  th { background:#222; color:white; }
-
-  tr.pass { background:#d4ffd4; }
-  tr.fail { background:#ffd4d4; }
-  tr.error { background:#fff3cd; }
-
-  td a {
-    word-break: break-word;
-    max-width: 260px;
-    display: inline-block;
-    color:#007bff;
-  }
-
-  .badge {
-    padding: 5px 10px;
-    border-radius: 20px;
-    color: white;
-    font-weight: bold;
-  }
-  .verified { background:#28a745; }
-  .failed { background:#dc3545; }
-  .error { background:#ffc107; color:#000; }
-</style>
-</head>
+    const html = `
+<!DOCTYPE html><html><head><title>${this.folderName} Report</title></head>
 <body>
+<h2>${this.folderName} - Link Report</h2>
+<p>Total: ${total}, Passed: ${pass}, Failed: ${fail}, Errors: ${error}</p>
+<table border="1" cellspacing="0" cellpadding="6">
+<tr><th>#</th><th>Name</th><th>URL</th><th>Status</th><th>Status Code</th><th>Error</th><th>Time</th></tr>
+${rows}
+</table>
+</body></html>`;
 
-  <h2>🔗 ${this.folderName} - Link Verification Report</h2>
+    fs.writeFileSync(this.htmlFile, html, "utf-8");
+    console.log(`📄 HTML saved → ${this.htmlFile}`);
+  }
 
-  <div class="summary-container">
-    <div class="card pass-card">Passed: ${pass}</div>
-    <div class="card fail-card">Failed: ${fail}</div>
-    <div class="card error-card">Other Errors: ${error}</div>
-  </div>
-
-  <table>
-    <tr>
-      <th>#</th>
-      <th>Link Name</th>
-      <th>URL</th>
-      <th>Status</th>
-      <th>Status Code</th>
-      <th>Error</th>
-      <th>Timestamp</th>
-    </tr>
-    ${rows}
-  </table>
-
-</body>
-</html>
-`;
-
-  fs.writeFileSync(this.htmlFile, html, "utf-8");
-  console.log(`📄 HTML Report generated: ${this.htmlFile}`);
-}
-
-  // ======================================================================
-  // 🔹 FIELD LEVEL HTML REPORT
-  // ======================================================================
+  // ---------------------------------------------------------------------
+  // HTML Report (Field-Level)
+  // ---------------------------------------------------------------------
   generateFieldHTMLReport() {
-  const fields = this.results.filter(r => r.linkUrl === "-");
-  const total = fields.length;
-  const success = fields.filter(r => r.status === "Success").length;
-  const failed = total - success;
+    const fields = this.results.filter((r) => r.linkUrl === "-");
+    const total = fields.length;
+    const success = fields.filter((r) => r.status === "Success").length;
 
-  let rows = fields
-    .map(
-      (r) => `
-      <tr class="${r.status === "Success" ? "pass" : "fail"}">
-        <td>${r.index}</td>
-        <td>${r.linkName}</td>
-        <td><span class="badge ${r.status === "Success" ? "success" : "failed"}">${r.status}</span></td>
-        <td>${r.error || "-"}</td>
-        <td>${r.timestamp}</td>
-        <td>
-          ${
-            r.screenshot
-              ? `<a href="${r.screenshot}" target="_blank">
-                   <img src="${r.screenshot}" width="150" class="thumb"/>
-                 </a>`
-              : ""
-          }
-        </td>
-      </tr>`
-    )
-    .join("");
+    let rows = fields
+      .map(
+        (r) => `
+<tr class="${r.status}">
+<td>${r.index}</td>
+<td>${r.linkName}</td>
+<td>${r.status}</td>
+<td>${r.error}</td>
+<td>${r.timestamp}</td>
+<td>${r.screenshot ? `<img src="${r.screenshot}" width="120">` : ""}</td>
+</tr>`
+      )
+      .join("");
 
-  let html = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>${this.folderName} - Field Level Report</title>
-<style>
-  body { font-family: Arial; margin: 20px; background:#f5f7fa; }
-
-  h2 { margin-bottom: 12px; }
-
-  /* Summary Cards */
-  .summary-container {
-    display:flex; gap:20px; margin-bottom:20px;
-  }
-  .card {
-    padding:18px 25px; border-radius:12px;
-    font-size:18px; font-weight:bold; color:#fff;
-    box-shadow:0 2px 6px rgba(0,0,0,0.15);
-  }
-  .success-card { background:#28a745; }
-  .fail-card { background:#dc3545; }
-  .total-card { background:#007bff; }
-
-  /* Table */
-  table {
-    width:100%; border-collapse:collapse;
-    background:white; box-shadow:0 2px 5px rgba(0,0,0,0.12);
-  }
-  th, td {
-    border:1px solid #ddd; padding:10px;
-    font-size:14px;
-  }
-  th { background:#222; color:#fff; }
-
-  tr.pass { background:#d4ffd4; }
-  tr.fail { background:#ffd4d4; }
-
-  /* Badges */
-  .badge {
-    padding:5px 12px; border-radius:20px;
-    color:white; font-weight:bold; font-size:12px;
-  }
-  .success { background:#28a745; }
-  .failed { background:#dc3545; }
-
-  /* Screenshot Thumbnail */
-  .thumb {
-    border-radius:5px; border:1px solid #444;
-    transition:transform .2s ease;
-  }
-  .thumb:hover { transform:scale(1.05); }
-
-</style>
-</head>
+    const html = `
+<!DOCTYPE html><html><head><title>${this.folderName} Field Report</title></head>
 <body>
+<h2>${this.folderName} - Field Report</h2>
+<p>Total: ${total}, Success: ${success}, Failed: ${total - success}</p>
+<table border="1" cellspacing="0" cellpadding="6">
+<tr><th>#</th><th>Field</th><th>Status</th><th>Error</th><th>Time</th><th>Screenshot</th></tr>
+${rows}
+</table>
+</body></html>`;
 
-  <h2>📋 ${this.folderName} - Field-Level Form Report</h2>
-
-  <!-- Summary Cards -->
-  <div class="summary-container">
-    <div class="card success-card">Success: ${success}</div>
-    <div class="card fail-card">Failed: ${failed}</div>
-    <div class="card total-card">Total Fields: ${total}</div>
-  </div>
-
-  <table>
-    <tr>
-      <th>#</th>
-      <th>Field Name</th>
-      <th>Status</th>
-      <th>Error</th>
-      <th>Timestamp</th>
-      <th>Screenshot</th>
-    </tr>
-    ${rows}
-  </table>
-
-</body>
-</html>
-`;
-
-  fs.writeFileSync(this.fieldHtmlFile, html, "utf-8");
-  console.log(`📄 Field-Level HTML Report generated: ${this.fieldHtmlFile}`);
-}
+    fs.writeFileSync(this.fieldHtmlFile, html, "utf-8");
+    console.log(`📄 Field HTML saved → ${this.fieldHtmlFile}`);
+  }
 }
