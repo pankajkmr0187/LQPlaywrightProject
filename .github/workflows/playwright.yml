@@ -12,66 +12,60 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout code
+      # Step 1: Checkout the repository code
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ Node Setup
+      # Step 2: Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "18"
 
-      # 3️⃣ Install Dependencies
+      # Step 3: Install required dependencies from package.json
       - name: Install dependencies
         run: npm install
 
-      # 🛑 IMPORTANT 🛑
-      # 4️⃣ Delete OLD reports (chahe Playwright चले या ना चले)
+      # Step 4: Cleanup old test reports before generating new ones
       - name: Cleanup old reports
         run: |
-          echo "Deleting old test-reports..."
           if [ -d "test-reports" ]; then
             rm -rf test-reports/*
           fi
 
-      # 5️⃣ OPTIONAL — Playwright Run (hata diya but commented so structure same rahe)
-      # - name: Install Playwright Browsers
-      #   run: npx playwright install --with-deps
+      # Step 5: Install Playwright browsers (required to run tests)
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
 
-      # - name: Run Mobile Home Test
-      #   run: npx playwright test tests/01_mob_home/mobHomePage.spec.js || true
+      # Step 6: Run ONLY the mobHomePage test
+      - name: Run Mobile Home Test
+        run: npx playwright test tests/01_mob_home/mobHomePage.spec.js || true
 
-      # ⭐ NEW STEP ADDED — GitHub se hi reports banenge
-      - name: Generate Reports (NO Playwright)
-        run: node .github/scripts/generateReports.js
-
-      # 6️⃣ Mark Status
+      # Step 7: Mark the test result as PASSED if workflow succeeded
       - name: Mark test passed
         if: ${{ success() }}
         run: |
           mkdir -p test-results
           echo "PASSED" > test-results/status.txt
 
+      # Step 8: Mark the test result as FAILED if workflow failed
       - name: Mark test failed
         if: ${{ failure() }}
         run: |
           mkdir -p test-results
           echo "FAILED" > test-results/status.txt
 
-      # 7️⃣ Zip Only Latest Report Folder
+      # Step 9: Zip only the latest generated report folder
       - name: Zip only latest report
         run: |
           if [ -d "test-reports" ] && [ "$(ls -A test-reports)" ]; then
             LATEST=$(ls -t test-reports | head -1)
-            echo "Latest report folder: $LATEST"
             zip -r playwright_full_report.zip "test-reports/$LATEST"
           else
-            echo "No reports found to zip!"
             touch playwright_full_report.zip
           fi
 
-      # 8️⃣ Upload Artifact
+      # Step 10: Upload zipped report as GitHub artifact
       - name: Upload Full Report Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -79,7 +73,7 @@ jobs:
           path: playwright_full_report.zip
           compression-level: 0
 
-      # 9️⃣ Send Email
+      # Step 11: Send report via email using your custom Node script
       - name: Send Email Report
         env:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
