@@ -1,44 +1,44 @@
-// GLOBAL REPORTER FOR AUTOMATIC REPORT GENERATION
-// This runs BEFORE and AFTER every test without modifying test files.
-
-import path from "path";
 import fs from "fs";
+import path from "path";
 import { ReportUtils } from "./reportUtils.js";
 
 class GlobalReport {
   onTestBegin(test) {
-    try {
-      // Generate a clean folder name based on test title
-      const safeName = test.title.replace(/\s+/g, "_");
+    const safeName = test.title.replace(/\s+/g, "_");
 
-      // Each test gets its own auto-report folder
-      const folderName = `AutoReport_${safeName}`;
+    // Create base directory if missing
+    const baseDir = path.join(process.cwd(), "test-reports");
+    if (!fs.existsSync(baseDir)) fs.mkdirSync(baseDir, { recursive: true });
 
-      // Create ReportUtils object without requiring a page object
-      this.report = new ReportUtils(null, folderName);
+    // Create folder without using page object
+    this.folder = path.join(baseDir, `AutoReport_${safeName}`);
 
-      // Reset results
-      this.report.results = [];
-
-      console.log(`🟢 Global Report Started: ${folderName}`);
-    } catch (err) {
-      console.log("⚠️ Error in onTestBegin:", err.message);
+    if (!fs.existsSync(this.folder)) {
+      fs.mkdirSync(this.folder, { recursive: true });
     }
+
+    // Create ReportUtils with mock page = {}
+    this.report = new ReportUtils(
+      { screenshot: async () => {} }, // fake page to prevent crash
+      `AutoReport_${safeName}`
+    );
+
+    this.report.results = [];
+    console.log(`🟢 Global Reporter: Started for ${safeName}`);
   }
 
   onTestEnd(test, result) {
-    try {
-      console.log("📄 Generating Global Reports...");
+    console.log("📄 Global Reporter: Generating reports...");
 
-      // Always generate reports even if empty
+    try {
       this.report.generateCSVReport();
       this.report.generateHTMLReport();
       this.report.generateFieldHTMLReport();
-
-      console.log("✅ Global Reports generated successfully!");
     } catch (err) {
-      console.log("❌ Report generation failed:", err.message);
+      console.log("❌ Global Reporter Error:", err.message);
     }
+
+    console.log("✅ Global Reporter: Done!");
   }
 }
 
