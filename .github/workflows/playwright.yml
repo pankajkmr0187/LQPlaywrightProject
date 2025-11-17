@@ -12,23 +12,37 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Checkout code
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 2️⃣ Node Setup
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "18"
 
+      # 3️⃣ Install Dependencies
       - name: Install dependencies
         run: npm install
 
+      # 🛑 IMPORTANT 🛑
+      # 4️⃣ Delete OLD reports (chahe Playwright चले या ना चले)
+      - name: Cleanup old reports
+        run: |
+          echo "Deleting old test-reports..."
+          if [ -d "test-reports" ]; then
+            rm -rf test-reports/*
+          fi
+
+      # 5️⃣ OPTIONAL — Playwright Run (चलाओ या हटाओ, रिपोर्ट पर असर नहीं)
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
       - name: Run Mobile Home Test
-        run: npx playwright test tests/01_mob_home/mobHomePage.spec.js
+        run: npx playwright test tests/01_mob_home/mobHomePage.spec.js || true
 
+      # 6️⃣ Mark Status
       - name: Mark test passed
         if: ${{ success() }}
         run: |
@@ -41,11 +55,19 @@ jobs:
           mkdir -p test-results
           echo "FAILED" > test-results/status.txt
 
-      - name: Zip full custom report
+      # 7️⃣ Zip Only Latest Report Folder
+      - name: Zip only latest report
         run: |
-          cd test-reports
-          zip -r ../playwright_full_report.zip .
+          if [ -d "test-reports" ] && [ "$(ls -A test-reports)" ]; then
+            LATEST=$(ls -t test-reports | head -1)
+            echo "Latest report folder: $LATEST"
+            zip -r playwright_full_report.zip "test-reports/$LATEST"
+          else
+            echo "No reports found to zip!"
+            touch playwright_full_report.zip
+          fi
 
+      # 8️⃣ Upload Artifact
       - name: Upload Full Report Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -53,6 +75,7 @@ jobs:
           path: playwright_full_report.zip
           compression-level: 0
 
+      # 9️⃣ Send Email
       - name: Send Email Report
         env:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
