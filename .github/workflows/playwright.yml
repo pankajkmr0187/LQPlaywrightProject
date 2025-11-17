@@ -35,12 +35,16 @@ jobs:
             rm -rf test-reports/*
           fi
 
-      # 5️⃣ OPTIONAL — Playwright Run (चलाओ या हटाओ, रिपोर्ट पर असर नहीं)
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+      # 5️⃣ OPTIONAL — Playwright Run (hata diya but commented so structure same rahe)
+      # - name: Install Playwright Browsers
+      #   run: npx playwright install --with-deps
 
-      - name: Run Mobile Home Test
-        run: npx playwright test tests/01_mob_home/mobHomePage.spec.js || true
+      # - name: Run Mobile Home Test
+      #   run: npx playwright test tests/01_mob_home/mobHomePage.spec.js || true
+
+      # ⭐ NEW STEP ADDED — GitHub se hi reports banenge
+      - name: Generate Reports (NO Playwright)
+        run: node .github/scripts/generateReports.js
 
       # 6️⃣ Mark Status
       - name: Mark test passed

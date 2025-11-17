@@ -138,7 +138,7 @@ export class MobHomePage extends BasePage {
     await this.page.waitForNavigation({ waitUntil: "load", timeout: 15000 });
 
     const text = await this.page.evaluate(() => document.body.innerText.toLowerCase());
-
+    await this.wait(2);
     if (text.includes("thank you for signing up") || text.includes("thank you for registration"))
       console.log("🎉 SUCCESS: Try for Free submission successful!");
     else
