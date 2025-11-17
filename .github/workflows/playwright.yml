@@ -12,60 +12,61 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository code
+      # 1) Checkout
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Setup Node.js
+      # 2) Node setup
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "18"
 
-      # Step 3: Install required dependencies from package.json
+      # 3) Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # Step 4: Cleanup old test reports before generating new ones
+      # 4) Cleanup old reports (SAFE)
       - name: Cleanup old reports
         run: |
+          echo "Cleaning ONLY test-reports folder..."
           if [ -d "test-reports" ]; then
             rm -rf test-reports/*
           fi
 
-      # Step 5: Install Playwright browsers (required to run tests)
+      # (Optional) Install Playwright browsers
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      # Step 6: Run ONLY the mobHomePage test
+      # 5) Run test
       - name: Run Mobile Home Test
         run: npx playwright test tests/01_mob_home/mobHomePage.spec.js || true
 
-      # Step 7: Mark the test result as PASSED if workflow succeeded
+      # 6) Mark status
       - name: Mark test passed
         if: ${{ success() }}
         run: |
           mkdir -p test-results
           echo "PASSED" > test-results/status.txt
 
-      # Step 8: Mark the test result as FAILED if workflow failed
       - name: Mark test failed
         if: ${{ failure() }}
         run: |
           mkdir -p test-results
           echo "FAILED" > test-results/status.txt
 
-      # Step 9: Zip only the latest generated report folder
-      - name: Zip only latest report
+      # ⭐⭐ 7) FIXED ZIP STEP — ZIP ENTIRE TEST-REPORTS ⭐⭐
+      - name: Zip entire test-reports folder
         run: |
-          if [ -d "test-reports" ] && [ "$(ls -A test-reports)" ]; then
-            LATEST=$(ls -t test-reports | head -1)
-            zip -r playwright_full_report.zip "test-reports/$LATEST"
+          echo "Zipping FULL test-reports..."
+          if [ -d "test-reports" ]; then
+            zip -r playwright_full_report.zip test-reports
           else
+            echo "test-reports NOT FOUND"
             touch playwright_full_report.zip
           fi
 
-      # Step 10: Upload zipped report as GitHub artifact
+      # 8) Upload artifact
       - name: Upload Full Report Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -73,7 +74,7 @@ jobs:
           path: playwright_full_report.zip
           compression-level: 0
 
-      # Step 11: Send report via email using your custom Node script
+      # 9) Send Email
       - name: Send Email Report
         env:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
