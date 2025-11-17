@@ -12,6 +12,9 @@ export default defineConfig({
     ["list"],
     ["html", { outputFolder: "test-reports/playwright-html", open: "never" }],
     ["json", { outputFile: "test-reports/playwright-html/results.json" }],
+
+    // ⭐ Added global report generator (DO NOT REMOVE)
+    ["./utils/global-report.js"]
   ],
 
   // --------------------------
@@ -23,9 +26,7 @@ export default defineConfig({
     screenshot: "only-on-failure",
     video: "retain-on-failure",
 
-    // 🔥 MASTER FIX
-    // Local = headed
-    // GitHub Actions = headless
+    // Local = headed, GitHub = headless
     headless: process.env.CI ? true : false,
 
     userAgent:
@@ -50,11 +51,9 @@ export default defineConfig({
       name: "Mobile Chrome",
       use: {
         ...devices["Pixel 5"],
-
         browserName: "chromium",
         viewport: { width: 390, height: 844 },
 
-        // 🔥 HEADLESS/FULLSCREEN handled globally by CI logic
         launchOptions: {
           args: [
             "--window-size=400,700",
