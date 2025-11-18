@@ -5,7 +5,7 @@ on:
     branches: ["main"]
   workflow_dispatch:
   schedule:
-    - cron: "30 0 * * *"  # Runs at 6:00 AM IST
+    - cron: "30 0 * * *" # Runs at 6:00 AM IST
 
 jobs:
   test:
@@ -34,16 +34,20 @@ jobs:
             rm -rf test-reports/*
           fi
 
-      # (Optional) Install Playwright browsers
+      # 5) Install Playwright browsers
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      # 5) Run test
-      - name: Run LQ Website
-        - name: Run Mobile Tests
-        run: npx playwright test tests/01_mob_home tests/02_mob_aboutus || true
+      # 6) Run ALL Required Tests
+      - name: Run Mobile Tests
+        run: |
+          echo "Running Folder 01..."
+          npx playwright test tests/01_mob_home || true
 
-      # 6) Mark status
+          echo "Running Folder 02..."
+          npx playwright test tests/02_mob_aboutus || true
+
+      # 7) Mark status
       - name: Mark test passed
         if: ${{ success() }}
         run: |
@@ -56,7 +60,7 @@ jobs:
           mkdir -p test-results
           echo "FAILED" > test-results/status.txt
 
-      # ⭐⭐ 7) FIXED ZIP STEP — ZIP ENTIRE TEST-REPORTS ⭐⭐
+      # 8) Zip Reports
       - name: Zip entire test-reports folder
         run: |
           echo "Zipping FULL test-reports..."
@@ -67,7 +71,7 @@ jobs:
             touch playwright_full_report.zip
           fi
 
-      # 8) Upload artifact
+      # 9) Upload artifact
       - name: Upload Full Report Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -75,7 +79,7 @@ jobs:
           path: playwright_full_report.zip
           compression-level: 0
 
-      # 9) Send Email
+      # 10) Email Report
       - name: Send Email Report
         env:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
