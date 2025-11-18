@@ -1,4 +1,4 @@
-// ✅ FINAL mobHomePage.js — FULL Schedule + Try + Links + Field Reports
+// ✅ FINAL CLEAN mobHomePage.js — SAFE FOR GITHUB + LOCAL PLAYWRIGHT REPORTING
 import { BasePage } from "../BasePage.js";
 import { ReportUtils } from "../../utils/reportUtils.js";
 
@@ -139,6 +139,7 @@ export class MobHomePage extends BasePage {
 
     const text = await this.page.evaluate(() => document.body.innerText.toLowerCase());
     await this.wait(2);
+
     if (text.includes("thank you for signing up") || text.includes("thank you for registration"))
       console.log("🎉 SUCCESS: Try for Free submission successful!");
     else
@@ -202,6 +203,7 @@ export class MobHomePage extends BasePage {
         error = err.message;
       }
 
+      // Only log → NOT generating report here
       await reportUtils.logLinkResult(i + 1, text, href, status, statusCode, error);
 
       const scrollDist = Math.abs(y - prevY);
@@ -210,8 +212,8 @@ export class MobHomePage extends BasePage {
     }
 
     console.log("✔ Link verification completed!");
-    reportUtils.generateCSVReport();
-    reportUtils.generateHTMLReport();
+    // ❌ No generateCSVReport()
+    // ❌ No generateHTMLReport()
   }
 
   // =====================================================================
@@ -257,8 +259,8 @@ export class MobHomePage extends BasePage {
       await this.page.waitForTimeout(200);
     }
 
-    reportUtils.generateFieldHTMLReport();
-    reportUtils.generateCSVReport();
+    // ❌ No generateFieldHTMLReport()
+    // ❌ No generateCSVReport()
   }
 
   // =====================================================================

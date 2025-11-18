@@ -39,8 +39,9 @@ jobs:
         run: npx playwright install --with-deps
 
       # 5) Run test
-      - name: Run Mobile Home Test
-        run: npx playwright test tests/01_mob_home/mobHomePage.spec.js || true
+      - name: Run LQ Website
+        - name: Run Mobile Tests
+        run: npx playwright test tests/01_mob_home tests/02_mob_aboutus || true
 
       # 6) Mark status
       - name: Mark test passed
