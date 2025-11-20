@@ -29,7 +29,7 @@ import nodemailer from "nodemailer";
 
     const html = `
       <div style="font-family:Arial;padding:20px;">
-        <h2 style="color:#0056d6;">Playwright Automation Report</h2>
+        <h2 style="color:#0056d6;">Playwright LQ Website Automation Report</h2>
 
         <p><b>Status:</b> ${testStatus}</p>
         <p><b>Execution Time:</b> ${timestamp}</p>

@@ -5,28 +5,24 @@ on:
     branches: ["main"]
   workflow_dispatch:
   schedule:
-    - cron: "30 0 * * *" # Runs at 6:00 AM IST
+  - cron: "0 3 * * *"   # Runs at 8:30 AM IST
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      # 1) Checkout
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2) Node setup
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "18"
 
-      # 3) Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # 4) Cleanup old reports
       - name: Cleanup old reports
         run: |
           echo "Cleaning ONLY test-reports folder..."
@@ -34,20 +30,20 @@ jobs:
             rm -rf test-reports/*
           fi
 
-      # 5) Install Playwright browsers
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      # 6) Run ALL Required Tests
-      - name: Run Mobile Tests
+      # ⭐ AUTO-RUN ALL TEST FOLDERS INSIDE tests/
+      - name: Run LQ Website Test suite
         run: |
-          echo "Running Folder 01..."
-          npx playwright test tests/01_mob_home || true
+          echo "=== AUTO RUNNING ALL TEST FOLDERS ==="
+          for d in tests/*; do
+            if [ -d "$d" ]; then
+              echo "▶ Running: $d"
+              npx playwright test "$d" || true
+            fi
+          done
 
-          echo "Running Folder 02..."
-          npx playwright test tests/02_mob_aboutus || true
-
-      # 7) Mark status
       - name: Mark test passed
         if: ${{ success() }}
         run: |
@@ -60,7 +56,6 @@ jobs:
           mkdir -p test-results
           echo "FAILED" > test-results/status.txt
 
-      # 8) Zip Reports
       - name: Zip entire test-reports folder
         run: |
           echo "Zipping FULL test-reports..."
@@ -71,7 +66,6 @@ jobs:
             touch playwright_full_report.zip
           fi
 
-      # 9) Upload artifact
       - name: Upload Full Report Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -79,23 +73,20 @@ jobs:
           path: playwright_full_report.zip
           compression-level: 0
 
-      # ⭐ NEW STEP (SAFE DEBUG FOR TO / CC / BCC)
       - name: Debug Email Recipients
         run: |
           echo "=== EMAIL RECIPIENTS DEBUG ==="
           echo "TO (masked): $EMAIL_TO"
           echo "CC (masked): $EMAIL_CC"
           echo "BCC (masked): $EMAIL_BCC"
-
           echo "-------------------------------"
-          echo "TO Count: $(echo "$EMAIL_TO" | tr ',' '\n' | wc -l)"
-          echo "CC Count: $(echo "$EMAIL_CC" | tr ',' '\n' | wc -l)"
+          echo "TO Count : $(echo "$EMAIL_TO" | tr ',' '\n' | wc -l)"
+          echo "CC Count : $(echo "$EMAIL_CC" | tr ',' '\n' | wc -l)"
           echo "BCC Count: $(echo "$EMAIL_BCC" | tr ',' '\n' | wc -l)"
-
           echo "-------------------------------"
-          echo "TO Raw Length: ${#EMAIL_TO}"
-          echo "CC Raw Length: ${#EMAIL_CC}"
-          echo "BCC Raw Length: ${#EMAIL_BCC}"
+          echo "TO Length : ${#EMAIL_TO}"
+          echo "CC Length : ${#EMAIL_CC}"
+          echo "BCC Length: ${#EMAIL_BCC}"
         env:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
@@ -103,7 +94,6 @@ jobs:
           EMAIL_CC: ${{ secrets.EMAIL_CC }}
           EMAIL_BCC: ${{ secrets.EMAIL_BCC }}
 
-      # 10) Send Email Report
       - name: Send Email Report
         env:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
