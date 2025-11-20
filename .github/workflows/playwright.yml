@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # 4) Cleanup old reports (SAFE)
+      # 4) Cleanup old reports
       - name: Cleanup old reports
         run: |
           echo "Cleaning ONLY test-reports folder..."
@@ -79,7 +79,31 @@ jobs:
           path: playwright_full_report.zip
           compression-level: 0
 
-      # 10) Email Report
+      # ⭐ NEW STEP (SAFE DEBUG FOR TO / CC / BCC)
+      - name: Debug Email Recipients
+        run: |
+          echo "=== EMAIL RECIPIENTS DEBUG ==="
+          echo "TO (masked): $EMAIL_TO"
+          echo "CC (masked): $EMAIL_CC"
+          echo "BCC (masked): $EMAIL_BCC"
+
+          echo "-------------------------------"
+          echo "TO Count: $(echo "$EMAIL_TO" | tr ',' '\n' | wc -l)"
+          echo "CC Count: $(echo "$EMAIL_CC" | tr ',' '\n' | wc -l)"
+          echo "BCC Count: $(echo "$EMAIL_BCC" | tr ',' '\n' | wc -l)"
+
+          echo "-------------------------------"
+          echo "TO Raw Length: ${#EMAIL_TO}"
+          echo "CC Raw Length: ${#EMAIL_CC}"
+          echo "BCC Raw Length: ${#EMAIL_BCC}"
+        env:
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          EMAIL_CC: ${{ secrets.EMAIL_CC }}
+          EMAIL_BCC: ${{ secrets.EMAIL_BCC }}
+
+      # 10) Send Email Report
       - name: Send Email Report
         env:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
