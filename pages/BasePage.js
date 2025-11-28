@@ -21,6 +21,18 @@ export class BasePage {
     try {
       return await fn();
     } catch (err) {
+      // Critical methods that should fail the test (only core navigation failures)
+      const criticalMethods = [
+        'openPage'
+      ];
+      
+      // If it's a critical method, re-throw the error to fail the test
+      if (criticalMethods.includes(stepName)) {
+        console.log(`\n❌ CRITICAL ERROR in ${stepName}: ${err.message}`);
+        throw err;
+      }
+      
+      // For non-critical methods, log warning and continue
       console.log(`\n⚠️ GLOBAL WARNING: ${stepName} failed`);
       console.log(`   Reason: ${err.message}`);
       console.log("➡️ Continuing test execution...\n");

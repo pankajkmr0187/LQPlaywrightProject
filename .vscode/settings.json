@@ -1,5 +1,17 @@
 {
   "playwright.projectName": "Mobile Chrome",
   "playwright.showTrace": false,
-  "playwright.reuseBrowser": true
+  "playwright.reuseBrowser": true,
+  "github.copilot.chat.runCommand.enabled": true,
+  "terminal.integrated.defaultProfile.windows": "Command Prompt",
+  "terminal.integrated.profiles.windows": {
+    "Command Prompt": {
+      "path": "C:\\Windows\\System32\\cmd.exe",
+      "icon": "terminal-cmd"
+    },
+    "PowerShell": {
+      "source": "PowerShell",
+      "icon": "terminal-powershell"
+    }
+  }
 }
