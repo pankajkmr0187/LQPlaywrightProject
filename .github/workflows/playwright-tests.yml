@@ -36,15 +36,16 @@ jobs:
         path: test-reports/
         retention-days: 30
         
-    - name: Check if MASTER_SUMMARY exists
+    - name: Check test reports
       if: always()
       run: |
+        echo "📁 Checking test-reports folder..."
+        ls -la test-reports/ || echo "test-reports not found"
         if [ -f "test-reports/MASTER_SUMMARY.html" ]; then
-          echo "✅ MASTER_SUMMARY.html found"
-          ls -lh test-reports/MASTER_SUMMARY.html
+          echo "✅ MASTER_SUMMARY.html exists"
+          cat test-reports/MASTER_SUMMARY.html | head -20
         else
-          echo "❌ MASTER_SUMMARY.html NOT found"
-          ls -la test-reports/ || echo "test-reports folder not found"
+          echo "❌ MASTER_SUMMARY.html not found"
         fi
         
     - name: Send email with summary report
@@ -53,19 +54,13 @@ jobs:
       with:
         server_address: smtp.gmail.com
         server_port: 587
+        secure: true
         username: ${{ secrets.MAIL_USERNAME }}
         password: ${{ secrets.MAIL_PASSWORD }}
-        subject: 'Playwright Test Results - Run #${{ github.run_number }}'
+        subject: Playwright Test Results - Run #${{ github.run_number }}
         to: ${{ secrets.MAIL_TO }}
-        from: Playwright Tests <${{ secrets.MAIL_USERNAME }}>
-        body: |
-          Playwright test execution completed!
-          
-          Run Number: #${{ github.run_number }}
-          Status: ${{ job.status }}
-          
-          Please find the MASTER_SUMMARY.html attached.
-          Download full reports from GitHub Actions Artifacts.
-        attachments: test-reports/MASTER_SUMMARY.html
-        content_type: text/html
+        from: ${{ secrets.MAIL_USERNAME }}
+        html_body: file://test-reports/MASTER_SUMMARY.html
+        convert_markdown: false
+        ignore_cert: true
         priority: high
