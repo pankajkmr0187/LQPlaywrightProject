@@ -48,19 +48,26 @@ jobs:
           echo "❌ MASTER_SUMMARY.html not found"
         fi
         
-    - name: Send email with summary report
+    - name: Read MASTER_SUMMARY content
       if: always()
+      id: summary
+      run: |
+        if [ -f "test-reports/MASTER_SUMMARY.html" ]; then
+          echo "summary_exists=true" >> $GITHUB_OUTPUT
+        else
+          echo "summary_exists=false" >> $GITHUB_OUTPUT
+        fi
+        
+    - name: Send email with summary report
+      if: always() && steps.summary.outputs.summary_exists == 'true'
       uses: dawidd6/action-send-mail@v3
       with:
         server_address: smtp.gmail.com
         server_port: 587
-        secure: true
         username: ${{ secrets.MAIL_USERNAME }}
         password: ${{ secrets.MAIL_PASSWORD }}
         subject: Playwright Test Results - Run #${{ github.run_number }}
         to: ${{ secrets.MAIL_TO }}
         from: ${{ secrets.MAIL_USERNAME }}
         html_body: file://test-reports/MASTER_SUMMARY.html
-        convert_markdown: false
-        ignore_cert: true
         priority: high
