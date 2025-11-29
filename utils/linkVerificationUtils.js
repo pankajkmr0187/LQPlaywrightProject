@@ -61,39 +61,17 @@ export class LinkVerificationUtils {
           }
         }, href);
 
-        // ✅ Handle external links separately
+        // ✅ Handle external links separately (NO SCREENSHOTS unless failed)
         if (href.match(/linkedin|facebook|instagram|youtube|x\.com|twitter|whatsapp/)) {
-          console.log(`🌐 External link — opening tab: ${href}`);
-          const [popup] = await Promise.all([
-            this.page.waitForEvent("popup", { timeout: 5000 }),
-            this.page.evaluate((url) => window.open(url, "_blank")),
-          ]);
-          await popup.waitForLoadState("load", { timeout: 10000 }).catch(() => null);
-          const title = await popup.title().catch(() => "");
-          console.log(`✅ External link loaded: ${title || href}`);
-          await popup.screenshot({
-            path: `test-reports/${folderName}/screenshots/External_${i + 1}.png`,
-          });
-          await popup.waitForTimeout(3000);
-          await popup.close();
-          reportUtils.results.push({
-            index: i + 1,
-            linkName: text,
-            linkUrl: href,
-            status: "VERIFIED",
-            statusCode: 200,
-            error: "-",
-            timestamp: new Date().toISOString(),
-          });
-        } else {
-          // ✅ Internal link test (HTTP verification)
+          console.log(`🌐 Checking external link: ${href}`);
+          
           const response = await this.page.request.get(href);
           const code = response.status();
+          
           if (code >= 400) {
-            console.log(`❌ Failed: ${code}`);
-            await this.page.screenshot({
-              path: `test-reports/${folderName}/screenshots/FAILED_${i + 1}.png`,
-            });
+            console.log(`❌ External link failed: ${code}`);
+            const screenshotPath = `${reportUtils.screenshotDir}/FAILED_${i + 1}.png`;
+            await this.page.screenshot({ path: screenshotPath });
             reportUtils.results.push({
               index: i + 1,
               linkName: text,
@@ -101,6 +79,38 @@ export class LinkVerificationUtils {
               status: "FAILED",
               statusCode: code,
               error: "HTTP Error",
+              screenshot: screenshotPath,
+              timestamp: new Date().toISOString(),
+            });
+          } else {
+            console.log(`✅ External link OK: ${code}`);
+            reportUtils.results.push({
+              index: i + 1,
+              linkName: text,
+              linkUrl: href,
+              status: "VERIFIED",
+              statusCode: code,
+              error: "-",
+              screenshot: "",
+              timestamp: new Date().toISOString(),
+            });
+          }
+        } else {
+          // ✅ Internal link test (HTTP verification)
+          const response = await this.page.request.get(href);
+          const code = response.status();
+          if (code >= 400) {
+            console.log(`❌ Failed: ${code}`);
+            const screenshotPath = `${reportUtils.screenshotDir}/FAILED_${i + 1}.png`;
+            await this.page.screenshot({ path: screenshotPath });
+            reportUtils.results.push({
+              index: i + 1,
+              linkName: text,
+              linkUrl: href,
+              status: "FAILED",
+              statusCode: code,
+              error: "HTTP Error",
+              screenshot: screenshotPath,
               timestamp: new Date().toISOString(),
             });
           } else {
@@ -112,12 +122,15 @@ export class LinkVerificationUtils {
               status: "VERIFIED",
               statusCode: code,
               error: "-",
+              screenshot: "",
               timestamp: new Date().toISOString(),
             });
           }
         }
       } catch (err) {
         console.warn(`⚠️ Link error: ${href}`);
+        const screenshotPath = `${reportUtils.screenshotDir}/ERROR_${i + 1}.png`;
+        await this.page.screenshot({ path: screenshotPath }).catch(() => {});
         reportUtils.results.push({
           index: i + 1,
           linkName: text,
@@ -125,6 +138,7 @@ export class LinkVerificationUtils {
           status: "ERROR",
           statusCode: 999,
           error: err.message,
+          screenshot: screenshotPath,
           timestamp: new Date().toISOString(),
         });
       }
@@ -133,7 +147,7 @@ export class LinkVerificationUtils {
     }
 
     const csv = reportUtils.generateCSVReport();
-    const html = reportUtils.generateHTMLReport();
+    const html = reportUtils.generateHTMLReport(pageName);
     console.log(`📊 CSV: ${csv}`);
     console.log(`📄 HTML: ${html}`);
     this.generateHybridReports();

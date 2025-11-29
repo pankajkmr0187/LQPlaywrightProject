@@ -9,6 +9,7 @@
     "test:all": "node runAllTests.js",
     "test:home": "npx playwright test tests/01_mob_home",
     "test:aboutus": "npx playwright test tests/02_mob_aboutus",
+    "test:home-aboutus": "npx playwright test tests/01_mob_home tests/02_mob_aboutus",
     "test:k12": "npx playwright test tests/03_mob_k12",
     "test:higher": "npx playwright test tests/04_mob_highereducation",
     "test:blogs": "npx playwright test tests/05_mob_blogs",

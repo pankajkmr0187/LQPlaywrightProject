@@ -43,39 +43,21 @@ export class MobWhyLearnQochPage extends BasePage {
     await heading.waitFor({ state: "visible", timeout: 8000 });
     console.log("✅ Page heading visible!");
     
-    // Smooth scroll down
-    console.log("🔽 Starting smooth scroll down...");
-    await this.page.evaluate(async () => {
-      const totalHeight = document.body.scrollHeight - window.innerHeight;
-      const sections = 30;
-      const sectionHeight = totalHeight / sections;
-      
-      for (let i = 1; i <= sections; i++) {
-        const targetY = sectionHeight * i;
-        window.scrollTo({ top: targetY, behavior: 'smooth' });
-        await new Promise(resolve => setTimeout(resolve, 300));
-      }
+    // Fast scroll to bottom
+    console.log("🔽 Scrolling to bottom...");
+    await this.page.evaluate(() => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
     });
-    console.log("✅ Smooth scroll down complete!");
-    console.log("⏸️ Taking 1 second break...");
-    await this.page.waitForTimeout(1000);
+    await this.page.waitForTimeout(500);
+    console.log("✅ Reached bottom!");
     
-    // Smooth scroll up
-    console.log("🔼 Starting smooth scroll up...");
-    await this.page.evaluate(async () => {
-      const totalHeight = document.body.scrollHeight - window.innerHeight;
-      const sections = 30;
-      const sectionHeight = totalHeight / sections;
-      
-      for (let i = sections - 1; i >= 0; i--) {
-        const targetY = sectionHeight * i;
-        window.scrollTo({ top: targetY, behavior: 'smooth' });
-        await new Promise(resolve => setTimeout(resolve, 300));
-      }
-      
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Fast scroll to top
+    console.log("🔼 Scrolling to top...");
+    await this.page.evaluate(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
-    console.log("✅ Smooth scroll up complete!");
+    await this.page.waitForTimeout(500);
+    console.log("✅ Back to top!");
     
     // Use LinkVerificationUtils for link verification
     const linkVerifier = new LinkVerificationUtils(this.page);

@@ -1,1 +1,32 @@
+# Test Reports (Generated on GitHub Actions only)
+test-reports/
+test-results/
+playwright-report/
+
+# Playwright
+.playwright/
+
+# Dependencies
 node_modules/
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temp files
+*.tmp
+.cache/

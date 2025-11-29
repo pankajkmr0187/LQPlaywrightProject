@@ -34,29 +34,23 @@ export class MobBlogsPage extends BasePage {
     console.log("✅ Blogs main page opened!");
   }
 
-  // Medium speed scroll helper
+  // Fast scroll helper
   async scrollFullPage() {
-    console.log("🔽 Starting smooth medium-speed scroll...");
+    console.log("🔽 Starting fast scroll...");
     await this.page.evaluate(async () => {
       const totalHeight = document.body.scrollHeight - window.innerHeight;
-      const step = 150;
+      const step = 200;
       for (let y = 0; y <= totalHeight; y += step) {
         window.scrollTo(0, y);
-        await new Promise((r) => setTimeout(r, 120));
+        await new Promise((r) => setTimeout(r, 30));
       }
     });
 
-    console.log("🕒 Reached bottom, waiting 2s...");
-    await this.page.waitForTimeout(2000);
+    console.log("🕒 Reached bottom, waiting 0.5s...");
+    await this.page.waitForTimeout(500);
 
     console.log("🔼 Scrolling back to top...");
-    await this.page.evaluate(async () => {
-      for (let y = window.scrollY; y >= 0; y -= 250) {
-        window.scrollTo(0, y);
-        await new Promise((r) => setTimeout(r, 50));
-      }
-      window.scrollTo(0, 0);
-    });
+    await this.page.evaluate(() => window.scrollTo(0, 0));
     console.log("✅ Scroll completed!");
   }
 

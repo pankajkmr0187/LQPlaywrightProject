@@ -36,35 +36,21 @@ export class MobSupportPage extends BasePage {
     const currentUrl = this.page.url();
     console.log(`🌐 Current URL: ${currentUrl}`);
 
-    // Smooth scroll down
-    console.log("🔽 Starting smooth scroll down...");
-    await this.page.evaluate(async () => {
-      const totalHeight = document.body.scrollHeight - window.innerHeight;
-      const sections = 30;
-      const sectionHeight = totalHeight / sections;
-      for (let i = 1; i <= sections; i++) {
-        const targetY = sectionHeight * i;
-        window.scrollTo({ top: targetY, behavior: "smooth" });
-        await new Promise((resolve) => setTimeout(resolve, 300));
-      }
+    // Fast scroll down
+    console.log("🔽 Starting fast scroll down...");
+    await this.page.evaluate(() => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     });
-    console.log("✅ Smooth scroll down complete!");
-    await this.wait(1);
+    await this.page.waitForTimeout(500);
+    console.log("✅ Fast scroll down complete!");
 
-    // Smooth scroll up
-    console.log("🔼 Starting smooth scroll up...");
-    await this.page.evaluate(async () => {
-      const totalHeight = document.body.scrollHeight - window.innerHeight;
-      const sections = 30;
-      const sectionHeight = totalHeight / sections;
-      for (let i = sections - 1; i >= 0; i--) {
-        const targetY = sectionHeight * i;
-        window.scrollTo({ top: targetY, behavior: "smooth" });
-        await new Promise((resolve) => setTimeout(resolve, 300));
-      }
-      window.scrollTo({ top: 0, behavior: "smooth" });
+    // Fast scroll up
+    console.log("🔼 Starting fast scroll up...");
+    await this.page.evaluate(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
-    console.log("✅ Smooth scroll up complete!");
+    await this.page.waitForTimeout(500);
+    console.log("✅ Fast scroll up complete!");
 
     // Link verification
     const linkVerifier = new LinkVerificationUtils(this.page);

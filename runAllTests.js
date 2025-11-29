@@ -1,5 +1,5 @@
-const { execSync } = require('child_process');
-const path = require('path');
+import { execSync } from 'child_process';
+import path from 'path';
 
 // Test folders to run
 const testFolders = [

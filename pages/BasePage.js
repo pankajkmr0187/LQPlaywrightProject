@@ -2,13 +2,16 @@
 import { ReportUtils } from "../utils/reportUtils.js";
 
 export class BasePage {
-  constructor(page) {
+  constructor(page, reportName = null) {
     this.page = page;
     this.baseUrl = "https://www.learnqoch.com";
 
     // Common menu locators
     this.hamburgerIcon = page.locator('i.icon.icon-menu-9');
     this.crossIcon = page.locator('svg.e-font-icon-svg.e-far-window-close');
+
+    // ⭐ Shared ReportUtils instance for all child classes (only if reportName provided)
+    this.reportUtils = reportName ? new ReportUtils(page, reportName) : null;
 
     // ⭐ AUTO APPLY GLOBAL SAFE WRAPPING
     this.wrapAllFunctions();
@@ -72,7 +75,7 @@ export class BasePage {
       waitUntil: "domcontentloaded",
       timeout: 60000,
     });
-    await this.wait(3); // Wait for page to fully load
+    await this.wait(1); // Wait for page to fully load
   }
 
   // ✅ Custom wait utility
@@ -173,7 +176,7 @@ export class BasePage {
         }
 
         console.log('▶️ Video started playing');
-        await this.wait(5);
+        await this.wait(2);
 
         if (video.type === 'iframe') {
           await this.page.evaluate((index) => {

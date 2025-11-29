@@ -62,20 +62,20 @@
     ],
     "shard": null,
     "updateSnapshots": "missing",
-    "updateSourceMethod": "3way",
+    "updateSourceMethod": "patch",
     "version": "1.56.0",
     "workers": 1,
     "webServer": null
   },
   "suites": [
     {
-      "title": "02_mob_aboutus\\1_mobVisionMission.spec.js",
-      "file": "02_mob_aboutus/1_mobVisionMission.spec.js",
+      "title": "01_mob_home\\mobHomePage.spec.js",
+      "file": "01_mob_home/mobHomePage.spec.js",
       "column": 0,
       "line": 0,
       "specs": [
         {
-          "title": "Vision & Mission Page Test — Verify Page Content and All Links",
+          "title": "Complete Home Page Flow",
           "ok": true,
           "tags": [],
           "tests": [
@@ -87,373 +87,421 @@
               "projectName": "Mobile Chrome",
               "results": [
                 {
-                  "workerIndex": 14,
+                  "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 67724,
+                  "duration": 73399,
                   "errors": [],
                   "stdout": [
                     {
-                      "text": "🌐 Opening LearnQoch homepage...\n"
+                      "text": "📁 Report Folder: test-reports\\01_mob_home\\HomePage\n"
+                    },
+                    {
+                      "text": "\n🔷 Part 1: Schedule Demo Form\n"
+                    },
+                    {
+                      "text": "🚀 Starting Schedule a Demo form automation...\n"
                     },
                     {
                       "text": "🌐 Opening URL: https://www.learnqoch.com\n"
                     },
                     {
-                      "text": "⏳ Waiting 3s...\n"
-                    },
-                    {
-                      "text": "⏳ Waiting 2s...\n"
-                    },
-                    {
-                      "text": "📱 Setting mobile viewport...\n"
-                    },
-                    {
-                      "text": "⏳ Waiting 2s...\n"
-                    },
-                    {
-                      "text": "🖱️ Clicking hamburger using BasePage method...\n"
-                    },
-                    {
-                      "text": "📱 Clicking hamburger until cross icon appears...\n"
-                    },
-                    {
-                      "text": "✅ Cross icon visible — menu opened successfully!\n"
-                    },
-                    {
-                      "text": "✅ Hamburger opened successfully!\n"
-                    },
-                    {
-                      "text": "📂 Clicking About Us...\n"
+                      "text": "⏳ Waiting 1s...\n"
                     },
                     {
                       "text": "⏳ Waiting 1s...\n"
                     },
                     {
-                      "text": "🧭 Clicking Vision and Mission...\n"
+                      "text": "✨ Highlighting and clicking 'Schedule a Demo'...\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 2s...\n"
+                    },
+                    {
+                      "text": "✅ Navigated to: https://learnqoch.com/schedule-a-demo/\n"
+                    },
+                    {
+                      "text": "⏳ Waiting for form to be ready...\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 2s...\n"
+                    },
+                    {
+                      "text": "✅ Form is ready!\n"
+                    },
+                    {
+                      "text": "✏️ Starting Schedule Demo form fill...\n"
+                    },
+                    {
+                      "text": "🎲 Random Designation: Counsellor\n"
+                    },
+                    {
+                      "text": "🎲 Random Solution: LMS\n"
+                    },
+                    {
+                      "text": "🎲 Random City: Chennai\n"
+                    },
+                    {
+                      "text": "✅ Filled: First Name\n"
+                    },
+                    {
+                      "text": "✅ Filled: Last Name\n"
+                    },
+                    {
+                      "text": "✅ Filled: Email\n"
+                    },
+                    {
+                      "text": "✅ Filled: Designation\n"
+                    },
+                    {
+                      "text": "✅ Filled: Solution\n"
+                    },
+                    {
+                      "text": "✅ Filled: Institute\n"
+                    },
+                    {
+                      "text": "✅ Filled: Phone Number\n"
+                    },
+                    {
+                      "text": "✅ Filled: City\n"
+                    },
+                    {
+                      "text": "💚 Checkbox checked\n"
                     },
                     {
                       "text": "⏳ Waiting 3s...\n"
                     },
                     {
-                      "text": "✅ Vision and Mission page opened successfully!\n"
+                      "text": "📤 Submitting Schedule Demo form...\n"
                     },
                     {
-                      "text": "🔍 Verifying Vision & Mission page content...\n"
+                      "text": "⏳ Waiting 3s...\n"
                     },
                     {
-                      "text": "🌐 Current URL: https://learnqoch.com/vision-and-mission/\n"
+                      "text": "🔍 Checking thank-you message...\n"
                     },
                     {
-                      "text": "📝 Found heading: Contact Us\n"
+                      "text": "📄 Page text snippet: see how learnqoch works\nfind out more about the most comprehensive solution.\nschedule a demo to see how you can:\nenhance your learning & teaching outcomes\nsave your time and effort for what truly matters\nseamlessly integrate your existing software system\n\nquestions? call us at +91 84519 01079\n\nfind out more about the most comprehensive solution.\n\nthere was an error trying to send your message. please try again later.\n\nselect designation\nprincipal\nvice principal\ncounsellor\ncoordinator\nvice chance\n"
                     },
                     {
-                      "text": "🧾 Found 12 text paragraphs.\n"
+                      "text": "✉️ Form response: There was an error trying to send your message. Please try again later.\n"
                     },
                     {
-                      "text": "✅ Vision & Mission basic content verified.\n"
+                      "text": "⚠️ Note: Schedule Demo form filled but server rejected (likely anti-bot protection)\n"
                     },
                     {
-                      "text": "\n🔗 Starting link verification on Vision & Mission page...\n"
+                      "text": "📄 Response: There was an error trying to send your message. Please try again later.\n"
                     },
                     {
-                      "text": "📁 Report Folder: test-reports\\GenericReport\n"
+                      "text": "➡️ Continuing to next step...\n"
                     },
                     {
-                      "text": "📋 Total visible links found: 29\n"
+                      "text": "✅ Schedule Demo test completed!\n"
                     },
                     {
-                      "text": "\n🔹 [1] Unnamed Link\n"
+                      "text": "\n🔷 Part 2: Try for Free Form\n"
+                    },
+                    {
+                      "text": "🚀 Starting Try for Free form automation...\n"
+                    },
+                    {
+                      "text": "🌐 Opening URL: https://www.learnqoch.com\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 1s...\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 1s...\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 1s...\n"
+                    },
+                    {
+                      "text": "✨ Highlighting and clicking 'Try for Free'...\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 2s...\n"
+                    },
+                    {
+                      "text": "💚 Navigated to: https://learnqoch.com/try-for-free/\n"
+                    },
+                    {
+                      "text": "⏳ Waiting for form to be ready...\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 2s...\n"
+                    },
+                    {
+                      "text": "✅ Form is ready!\n"
+                    },
+                    {
+                      "text": "✏️ Filling Try for Free form...\n"
+                    },
+                    {
+                      "text": "🎲 Random Designation: Vice Chancellor\n"
+                    },
+                    {
+                      "text": "🎲 Random Solution: ERP\n"
+                    },
+                    {
+                      "text": "🎲 Random City: Delhi\n"
+                    },
+                    {
+                      "text": "✅ Filled: First Name\n"
+                    },
+                    {
+                      "text": "✅ Filled: Last Name\n"
+                    },
+                    {
+                      "text": "✅ Filled: Email\n"
+                    },
+                    {
+                      "text": "✅ Filled: Designation\n"
+                    },
+                    {
+                      "text": "✅ Filled: Solution\n"
+                    },
+                    {
+                      "text": "✅ Filled: Institute\n"
+                    },
+                    {
+                      "text": "✅ Filled: Phone Number\n"
+                    },
+                    {
+                      "text": "✅ Filled: City\n"
+                    },
+                    {
+                      "text": "💚 Checkbox checked\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 3s...\n"
+                    },
+                    {
+                      "text": "📤 Submitting Try for Free form...\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 3s...\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 2s...\n"
+                    },
+                    {
+                      "text": "⚠️ Note: Try for Free form filled but server rejected (likely anti-bot protection)\n"
+                    },
+                    {
+                      "text": "➡️ Continuing to next step...\n"
+                    },
+                    {
+                      "text": "✅ Try for Free test completed!\n"
+                    },
+                    {
+                      "text": "\n🔷 Part 3: Link Verification\n"
+                    },
+                    {
+                      "text": "\n🔗 Starting link verification...\n"
+                    },
+                    {
+                      "text": "🌐 Opening URL: https://www.learnqoch.com\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 1s...\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 1s...\n"
+                    },
+                    {
+                      "text": "📋 Total links found: 28\n"
+                    },
+                    {
+                      "text": "\n🔹 Link #1: Unnamed Link\n"
                     },
                     {
                       "text": "   URL: http://learnqoch.com/\n"
                     },
                     {
-                      "text": "⏳ Waiting 1.02s...\n"
-                    },
-                    {
-                      "text": "\n🔹 [2] Try for free\n"
+                      "text": "\n🔹 Link #2: Try for free\n"
                     },
                     {
                       "text": "   URL: http://learnqoch.com/try-for-free/\n"
                     },
                     {
-                      "text": "⏳ Waiting 1.011s...\n"
+                      "text": "\n🔹 Link #3: Outcome-Based Education vs. Competency-Based Learning: What’s the Difference?\n"
                     },
                     {
-                      "text": "\n🔹 [3] About Us\n"
+                      "text": "   URL: https://learnqoch.com/obe-vs-cbl-difference/\n"
                     },
                     {
-                      "text": "   URL: https://learnqoch.com/vision-and-mission/#\n"
-                    },
-                    {
-                      "text": "⏳ Waiting 1.0306875s...\n"
-                    },
-                    {
-                      "text": "\n🔹 [4] Why Faculty Development Is Key to Outcome-Based Education Success?\n"
-                    },
-                    {
-                      "text": "   URL: https://learnqoch.com/faculty-development-obe-success/\n"
-                    },
-                    {
-                      "text": "⏳ Waiting 1.0313125s...\n"
-                    },
-                    {
-                      "text": "\n🔹 [5] K12\n"
-                    },
-                    {
-                      "text": "   URL: https://learnqoch.com/k-12/\n"
-                    },
-                    {
-                      "text": "⏳ Waiting 1.0286875s...\n"
-                    },
-                    {
-                      "text": "\n🔹 [6] Higher Education\n"
+                      "text": "\n🔹 Link #4: Explore HEI Solutions\n"
                     },
                     {
                       "text": "   URL: https://learnqoch.com/higher-educational-institutions-hei/\n"
                     },
                     {
-                      "text": "⏳ Waiting 1.045s...\n"
-                    },
-                    {
-                      "text": "\n🔹 [7] Blogs\n"
-                    },
-                    {
-                      "text": "   URL: https://learnqoch.com/blogs/\n"
-                    },
-                    {
-                      "text": "⏳ Waiting 1.06s...\n"
-                    },
-                    {
-                      "text": "\n🔹 [8] Support\n"
-                    },
-                    {
-                      "text": "   URL: https://learnqoch.com/support/\n"
-                    },
-                    {
-                      "text": "⏳ Waiting 1.045s...\n"
-                    },
-                    {
-                      "text": "\n🔹 [9] Unnamed Link\n"
-                    },
-                    {
-                      "text": "   URL: https://wa.me/8451901079?text=Hi,%20I%27m%20interested%20in%20learning%20more%20about%20LearnQoch%27s%20educational%20solutions.%20Could%20you%20please%20assist%20me%20with%20my%20query?\n"
-                    },
-                    {
-                      "text": "⏳ Waiting 1.5023125s...\n"
-                    },
-                    {
-                      "text": "\n🔹 [10] Explore K12 Solutions\n"
+                      "text": "\n🔹 Link #5: Explore K12 Solutions\n"
                     },
                     {
                       "text": "   URL: https://learnqoch.com/k-12/\n"
                     },
                     {
-                      "text": "⏳ Waiting 1.821375s...\n"
-                    },
-                    {
-                      "text": "\n🔹 [11] Explore HEI Solutions\n"
-                    },
-                    {
-                      "text": "   URL: https://learnqoch.com/higher-educational-institutions-hei/\n"
-                    },
-                    {
-                      "text": "⏳ Waiting 1.076s...\n"
-                    },
-                    {
-                      "text": "\n🔹 [12] Schedule a Demo\n"
+                      "text": "\n🔹 Link #6: Schedule a Demo\n"
                     },
                     {
                       "text": "   URL: https://learnqoch.com/schedule-a-demo/\n"
                     },
                     {
-                      "text": "⏳ Waiting 1.391890625s...\n"
-                    },
-                    {
-                      "text": "\n🔹 [13] Try for Free\n"
+                      "text": "\n🔹 Link #7: Try for Free\n"
                     },
                     {
                       "text": "   URL: https://learnqoch.com/try-for-free/\n"
                     },
                     {
-                      "text": "⏳ Waiting 1.076s...\n"
+                      "text": "\n🔹 Link #8: Explore HEI Solutions\n"
                     },
                     {
-                      "text": "\n🔹 [14] Unnamed Link\n"
+                      "text": "   URL: https://learnqoch.com/higher-educational-institutions-hei/\n"
                     },
                     {
-                      "text": "   URL: https://www.learnqoch.com/\n"
+                      "text": "\n🔹 Link #9: Explore K12 Solutions\n"
                     },
                     {
-                      "text": "⏳ Waiting 1.3023906250000001s...\n"
+                      "text": "   URL: https://learnqoch.com/k-12/\n"
                     },
                     {
-                      "text": "\n🔹 [15] Unnamed Link\n"
+                      "text": "\n🔹 Link #10: Try for free\n"
                     },
                     {
-                      "text": "   URL: https://web.whatsapp.com/\n"
+                      "text": "   URL: https://learnqoch.com/try-for-free/\n"
                     },
                     {
-                      "text": "📸 Screenshot saved for FAILED link: test-reports/VisionMission/screenshots/FAILED_15_Unnamed_Link.png\n"
+                      "text": "\n🔹 Link #11: Unnamed Link\n"
                     },
                     {
-                      "text": "⏳ Waiting 1.2611875000000001s...\n"
+                      "text": "   URL: https://www.youtube.com/embed/IQQlOK8fUvw?feature=oembed&loop=0&autoplay=1&controls=0&mute=0&iframe=true\n"
                     },
                     {
-                      "text": "\n🔹 [16] Unnamed Link\n"
+                      "text": "\n🔹 Link #12: Unnamed Link\n"
                     },
                     {
-                      "text": "   URL: https://learnqoch.com/vision-and-mission/\n"
+                      "text": "   URL: https://www.youtube.com/embed/OzM4bX5iCq0?feature=oembed&loop=0&autoplay=1&controls=0&mute=0&iframe=true\n"
                     },
                     {
-                      "text": "⏳ Waiting 1.236390625s...\n"
+                      "text": "\n🔹 Link #13: Try a 14 Days Free Trial\n"
                     },
                     {
-                      "text": "\n🔹 [17] Book a Demo For 14 Days\n"
+                      "text": "   URL: https://learnqoch.com/try-for-free/\n"
+                    },
+                    {
+                      "text": "\n🔹 Link #14: Schedule a Demo\n"
+                    },
+                    {
+                      "text": "   URL: https://learnqoch.com/schedule-a-demo/\n"
+                    },
+                    {
+                      "text": "\n🔹 Link #15: Book a Demo For 14 Days\n"
                     },
                     {
                       "text": "   URL: http://learnqoch.com/schedule-a-demo/\n"
                     },
                     {
-                      "text": "⏳ Waiting 1.71178125s...\n"
-                    },
-                    {
-                      "text": "\n🔹 [18] K12\n"
+                      "text": "\n🔹 Link #16: K12\n"
                     },
                     {
                       "text": "   URL: http://learnqoch.com/k-12/\n"
                     },
                     {
-                      "text": "⏳ Waiting 1.204s...\n"
-                    },
-                    {
-                      "text": "\n🔹 [19] Higher Education\n"
+                      "text": "\n🔹 Link #17: Higher Education\n"
                     },
                     {
                       "text": "   URL: http://learnqoch.com/higher-educational-institutions-hei/\n"
                     },
                     {
-                      "text": "⏳ Waiting 1s...\n"
-                    },
-                    {
-                      "text": "\n🔹 [20] Careers\n"
+                      "text": "\n🔹 Link #18: Careers\n"
                     },
                     {
                       "text": "   URL: http://learnqoch.com/careers/\n"
                     },
                     {
-                      "text": "⏳ Waiting 1s...\n"
-                    },
-                    {
-                      "text": "\n🔹 [21] Channel Partner\n"
+                      "text": "\n🔹 Link #19: Channel Partner\n"
                     },
                     {
                       "text": "   URL: http://learnqoch.com/channel-partner/\n"
                     },
                     {
-                      "text": "⏳ Waiting 1s...\n"
-                    },
-                    {
-                      "text": "\n🔹 [22] Support\n"
+                      "text": "\n🔹 Link #20: Support\n"
                     },
                     {
                       "text": "   URL: http://learnqoch.com/support/\n"
                     },
                     {
-                      "text": "⏳ Waiting 1.027s...\n"
-                    },
-                    {
-                      "text": "\n🔹 [23] Privacy Policy\n"
+                      "text": "\n🔹 Link #21: Privacy Policy\n"
                     },
                     {
                       "text": "   URL: http://learnqoch.com/privacy_policy/\n"
                     },
                     {
-                      "text": "⏳ Waiting 1s...\n"
-                    },
-                    {
-                      "text": "\n🔹 [24] Terms of Use\n"
+                      "text": "\n🔹 Link #22: Terms of Use\n"
                     },
                     {
                       "text": "   URL: http://learnqoch.com/terms-and-condition/\n"
                     },
                     {
-                      "text": "⏳ Waiting 1s...\n"
+                      "text": "\n🔹 Link #23: Unnamed Link\n"
                     },
                     {
-                      "text": "\n🔹 [25] Facebook\n"
+                      "text": "   URL: https://wa.me/8451901079?text=Hi,%20I%27m%20interested%20in%20learning%20more%20about%20LearnQoch%27s%20educational%20solutions.%20Could%20you%20please%20assist%20me%20with%20my%20query?\n"
+                    },
+                    {
+                      "text": "\n🔹 Link #24: Facebook\n"
                     },
                     {
                       "text": "   URL: https://www.facebook.com/learnqoch\n"
                     },
                     {
-                      "text": "📸 Screenshot saved for FAILED link: test-reports/VisionMission/screenshots/FAILED_25_Facebook.png\n"
-                    },
-                    {
-                      "text": "⏳ Waiting 1.143s...\n"
-                    },
-                    {
-                      "text": "\n🔹 [26] Instagram\n"
+                      "text": "\n🔹 Link #25: Instagram\n"
                     },
                     {
                       "text": "   URL: https://www.instagram.com/learnqoch/\n"
                     },
                     {
-                      "text": "⏳ Waiting 1s...\n"
-                    },
-                    {
-                      "text": "\n🔹 [27] X-twitter\n"
+                      "text": "\n🔹 Link #26: X-twitter\n"
                     },
                     {
                       "text": "   URL: https://x.com/LearnQoch\n"
                     },
                     {
-                      "text": "⏳ Waiting 1s...\n"
-                    },
-                    {
-                      "text": "\n🔹 [28] Youtube\n"
+                      "text": "\n🔹 Link #27: Youtube\n"
                     },
                     {
                       "text": "   URL: https://www.youtube.com/channel/UCUm663gEGzcTrtZ2vBPAmqg\n"
                     },
                     {
-                      "text": "⏳ Waiting 1s...\n"
-                    },
-                    {
-                      "text": "\n🔹 [29] Linkedin\n"
+                      "text": "\n🔹 Link #28: Linkedin\n"
                     },
                     {
                       "text": "   URL: https://www.linkedin.com/company/learnqoch/\n"
                     },
                     {
-                      "text": "⏳ Waiting 1s...\n"
+                      "text": "✔ Link verification completed!\n"
                     },
                     {
-                      "text": "\n✅ Vision & Mission link verification completed successfully!\n"
+                      "text": "✅ Link Verification test completed!\n"
                     },
                     {
-                      "text": "📊 Generating reports...\n"
+                      "text": "\n📄 Generating final combined report...\n"
                     },
                     {
-                      "text": "📊 CSV saved: test-reports\\GenericReport\\GenericReport_2025-11-18_12-36-14-099.csv\n"
+                      "text": "📊 CSV saved: test-reports\\01_mob_home\\HomePage\\HomePage_2025-11-29_15-02-12-158.csv\n"
                     },
                     {
-                      "text": "📄 Link HTML saved: test-reports\\GenericReport\\GenericReport_2025-11-18_12-36-14-099.html\n"
+                      "text": "📄 Combined HTML saved: test-reports\\01_mob_home\\HomePage\\HomePage_2025-11-29_15-02-12-158.html\n"
                     },
                     {
-                      "text": "✅ CSV and HTML reports generated successfully!\n"
-                    },
-                    {
-                      "text": "📸 Screenshots (if any) saved under: test-reports/VisionMission/screenshots/\n"
-                    },
-                    {
-                      "text": "🎯 Vision & Mission page link verification test completed successfully!\n"
+                      "text": "🎯 Complete Home Page test completed successfully!\n"
                     }
                   ],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-11-18T07:05:51.722Z",
+                  "startTime": "2025-11-29T09:32:10.787Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -461,8 +509,8 @@
               "status": "expected"
             }
           ],
-          "id": "6d21fbe1610bba215b8a-5220282937e7af54bf45",
-          "file": "02_mob_aboutus/1_mobVisionMission.spec.js",
+          "id": "61d485a3bcc1b1faa367-da40d28c8e6c040088b3",
+          "file": "01_mob_home/mobHomePage.spec.js",
           "line": 4,
           "column": 1
         }
@@ -471,8 +519,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-11-18T07:05:47.460Z",
-    "duration": 72709.0549999997,
+    "startTime": "2025-11-29T09:32:08.079Z",
+    "duration": 77447.33600000001,
     "expected": 1,
     "skipped": 0,
     "unexpected": 0,

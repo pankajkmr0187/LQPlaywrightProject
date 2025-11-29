@@ -1,0 +1,55 @@
+name: Playwright Tests
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  schedule:
+    - cron: '0 9 * * *'  # Daily at 9 AM IST (3:30 AM UTC)
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 18
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps chromium
+      
+    - name: Run Playwright tests
+      run: npm run test:all
+      continue-on-error: true
+      
+    - name: Upload test reports as artifacts
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: playwright-test-reports
+        path: test-reports/
+        retention-days: 30
+        
+    - name: Send email with summary report
+      if: always()
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 587
+        username: ${{ secrets.MAIL_USERNAME }}
+        password: ${{ secrets.MAIL_PASSWORD }}
+        subject: 'Playwright Test Results - ${{ github.run_number }}'
+        to: ${{ secrets.MAIL_TO }}
+        from: Playwright Tests <${{ secrets.MAIL_USERNAME }}>
+        html_body: file://test-reports/MASTER_SUMMARY.html
+        attachments: test-reports/MASTER_SUMMARY.html
+        priority: high

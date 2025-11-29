@@ -1,6 +1,6 @@
 // 📁 File: pages/02_mob_aboutus/1_mobVisionMissionPage.js
 import { BasePage } from "../BasePage.js";
-import { ReportUtils } from "../../utils/reportUtils.js";
+import { LinkVerificationUtils } from "../../utils/linkVerificationUtils.js";
 
 export class MobVisionMissionPage extends BasePage {
   constructor(page) {
@@ -30,7 +30,7 @@ export class MobVisionMissionPage extends BasePage {
 
     console.log("🧭 Clicking Vision and Mission...");
     await this.page.locator(this.visionMissionLink).click();
-    await this.wait(3);
+    await this.wait(1);
 
     console.log("✅ Vision and Mission page opened successfully!");
   }
@@ -51,107 +51,10 @@ export class MobVisionMissionPage extends BasePage {
 
     console.log("✅ Vision & Mission basic content verified.");
 
-    // ========== LINK VERIFICATION + REPORT ==========
-    console.log("\n🔗 Starting link verification on Vision & Mission page...");
-
-    const reportUtils = new ReportUtils(this.page, "VisionMission");
-    const links = await this.page.evaluate(() => {
-      const all = Array.from(document.querySelectorAll("a[href]"));
-      const list = [];
-      all.forEach((a, i) => {
-        const s = window.getComputedStyle(a);
-        const r = a.getBoundingClientRect();
-        const isVisible =
-          r.width > 2 && r.height > 2 && s.display !== "none" && s.visibility !== "hidden";
-        if (isVisible && a.href && !a.href.includes("javascript:void")) {
-          list.push({
-            index: i + 1,
-            href: a.href,
-            text: a.innerText.trim() || "Unnamed Link",
-            y: r.top + window.scrollY,
-          });
-        }
-      });
-      return list.sort((a, b) => a.y - b.y);
-    });
-
-    console.log(`📋 Total visible links found: ${links.length}`);
-
-    let previousY = 0;
-
-    for (let i = 0; i < links.length; i++) {
-      const { href, text, y } = links[i];
-      console.log(`\n🔹 [${i + 1}] ${text}`);
-      console.log(`   URL: ${href}`);
-
-      let status = "VERIFIED";
-      let statusCode = 200;
-      let error = null;
-
-      try {
-        const response = await this.page.request.get(href);
-        statusCode = response.status();
-
-        if (statusCode >= 400) {
-          status = "FAILED";
-          const screenshotPath = `test-reports/VisionMission/screenshots/FAILED_${i + 1}_${text.replace(
-            /[^a-zA-Z0-9]/g,
-            "_"
-          )}.png`;
-          await this.page.screenshot({ path: screenshotPath });
-          console.log(`📸 Screenshot saved for FAILED link: ${screenshotPath}`);
-        }
-      } catch (err) {
-        status = "ERROR";
-        error = err.message;
-        const screenshotPath = `test-reports/VisionMission/screenshots/ERROR_${i + 1}_${text.replace(
-          /[^a-zA-Z0-9]/g,
-          "_"
-        )}.png`;
-        await this.page.screenshot({ path: screenshotPath });
-        console.log(`📸 Screenshot saved for ERROR link: ${screenshotPath}`);
-      }
-
-      // Add result
-      reportUtils.results.push({
-        index: i + 1,
-        linkName: text,
-        linkUrl: href,
-        status,
-        statusCode,
-        error,
-        timestamp: new Date().toISOString(),
-      });
-
-      // Scroll + highlight
-      await this.page.evaluate((target) => {
-        const el = Array.from(document.querySelectorAll("a[href]")).find((a) => a.href === target);
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "center" });
-          el.style.outline = "2px solid red";
-        }
-      }, href);
-
-      // Smart wait based on scroll distance
-      const scrollDistance = Math.abs(y - previousY);
-      const smartWait = Math.min(2.5, Math.max(1, scrollDistance / 1000 + 1));
-      previousY = y;
-      await this.wait(smartWait);
-
-      // Remove highlight
-      await this.page.evaluate((target) => {
-        const el = Array.from(document.querySelectorAll("a[href]")).find((a) => a.href === target);
-        if (el) el.style.outline = "";
-      }, href);
-    }
-
-    console.log("\n✅ Vision & Mission link verification completed successfully!");
-    console.log("📊 Generating reports...");
-
-    reportUtils.generateCSVReport();
-    reportUtils.generateHTMLReport();
-
-    console.log("✅ CSV and HTML reports generated successfully!");
-    console.log("📸 Screenshots (if any) saved under: test-reports/VisionMission/screenshots/");
+    // ✅ Use LinkVerificationUtils for link verification
+    const linkVerifier = new LinkVerificationUtils(this.page);
+    await linkVerifier.verifyPageLinks("Vision & Mission", "VisionMission");
+    
+    console.log("✅ Vision & Mission page verification completed successfully!");
   }
 }
