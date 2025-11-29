@@ -24,9 +24,6 @@ jobs:
     - name: Install dependencies
       run: npm ci
       
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps chromium
-      
     - name: Run Playwright tests
       run: npx playwright test tests/01_mob_home/
       continue-on-error: true
