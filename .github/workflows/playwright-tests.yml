@@ -24,6 +24,9 @@ jobs:
     - name: Install dependencies
       run: npm ci
       
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps chromium
+      
     - name: Run Playwright tests
       run: npx playwright test tests/01_mob_home/mobHomePage.spec.js
       continue-on-error: true
@@ -64,11 +67,10 @@ jobs:
       with:
         server_address: smtp.gmail.com
         server_port: 587
-        secure: true
         username: ${{ secrets.MAIL_USERNAME }}
         password: ${{ secrets.MAIL_PASSWORD }}
         subject: Playwright Test Results - Run #${{ github.run_number }}
         to: ${{ secrets.MAIL_TO }}
-        from: Playwright Tests
+        from: playwright-tests@learnqoch.com
         body: "Playwright test results attached. View detailed report in the HTML file."
         attachments: test-reports/MASTER_SUMMARY.html
