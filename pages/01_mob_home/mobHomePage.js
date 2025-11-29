@@ -4,8 +4,9 @@ import { ReportUtils } from "../../utils/reportUtils.js";
 
 export class MobHomePage extends BasePage {
   constructor(page) {
-    super(page, "HomePage");
-    // reportUtils is now inherited from BasePage
+    super(page, null);
+    // Create reportUtils only for Schedule Demo form
+    this.reportUtils = new ReportUtils(page, "01_mob_home");
   }
 
   // =====================================================================
