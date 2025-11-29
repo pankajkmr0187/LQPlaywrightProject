@@ -28,7 +28,7 @@ jobs:
       run: npx playwright install --with-deps chromium
       
     - name: Run Playwright tests
-      run: npx playwright test tests/01_mob_home/mobHomePage.spec.js
+      run: npm run test:all
       continue-on-error: true
       
     - name: Upload test reports as artifacts
