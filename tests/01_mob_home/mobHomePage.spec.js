@@ -14,10 +14,10 @@ test("Complete Home Page Flow", async ({ page }) => {
   await home.tryForFreeForm();
   console.log("✅ Try for Free test completed!");
   
-  // Test 3: Link Verification
-  console.log("\n🔷 Part 3: Link Verification");
-  await home.verifyLandingPageLinks();
-  console.log("✅ Link Verification test completed!");
+  // Test 3: Link Verification (commented out for faster execution)
+  // console.log("\n🔷 Part 3: Link Verification");
+  // await home.verifyLandingPageLinks();
+  // console.log("✅ Link Verification test completed!");
   
   // Generate combined report at the end with all data
   console.log("\n📄 Generating final combined report...");

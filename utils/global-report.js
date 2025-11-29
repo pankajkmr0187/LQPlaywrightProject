@@ -187,9 +187,15 @@ class GlobalReport {
                 failedLinks += linkFailed;
                 errorLinks += errors;
                 
+                // Create relative path from MASTER_SUMMARY.html location
+                const relativePath = path.relative(
+                  path.join(process.cwd(), 'test-reports'),
+                  htmlPath
+                ).replace(/\\/g, '/');
+                
                 folderDetails.push({
                   folder: `${folder}/${subfolder}`,
-                  htmlPath: htmlPath.replace(process.cwd() + '\\\\', '').replace(/\\\\/g, '/'),
+                  htmlPath: relativePath,
                   fields, passed, failed, warnings,
                   links, verified, linkFailed, errors
                 });

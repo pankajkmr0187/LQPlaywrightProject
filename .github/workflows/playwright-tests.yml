@@ -36,6 +36,17 @@ jobs:
         path: test-reports/
         retention-days: 30
         
+    - name: Check if MASTER_SUMMARY exists
+      if: always()
+      run: |
+        if [ -f "test-reports/MASTER_SUMMARY.html" ]; then
+          echo "✅ MASTER_SUMMARY.html found"
+          ls -lh test-reports/MASTER_SUMMARY.html
+        else
+          echo "❌ MASTER_SUMMARY.html NOT found"
+          ls -la test-reports/ || echo "test-reports folder not found"
+        fi
+        
     - name: Send email with summary report
       if: always()
       uses: dawidd6/action-send-mail@v3
@@ -44,9 +55,17 @@ jobs:
         server_port: 587
         username: ${{ secrets.MAIL_USERNAME }}
         password: ${{ secrets.MAIL_PASSWORD }}
-        subject: 'Playwright Test Results - ${{ github.run_number }}'
+        subject: 'Playwright Test Results - Run #${{ github.run_number }}'
         to: ${{ secrets.MAIL_TO }}
         from: Playwright Tests <${{ secrets.MAIL_USERNAME }}>
-        html_body: file://test-reports/MASTER_SUMMARY.html
+        body: |
+          Playwright test execution completed!
+          
+          Run Number: #${{ github.run_number }}
+          Status: ${{ job.status }}
+          
+          Please find the MASTER_SUMMARY.html attached.
+          Download full reports from GitHub Actions Artifacts.
         attachments: test-reports/MASTER_SUMMARY.html
+        content_type: text/html
         priority: high
