@@ -60,7 +60,13 @@ import nodemailer from "nodemailer";
       cc: EMAIL_CC || "",
       bcc: EMAIL_BCC || "",
       subject,
-      html
+      html,
+      attachments: [
+        {
+          filename: "MASTER_SUMMARY.html",
+          path: "test-reports/MASTER_SUMMARY.html"
+        }
+      ]
     });
 
     console.log("📩 Email sent successfully!");
