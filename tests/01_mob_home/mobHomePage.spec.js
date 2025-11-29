@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { MobHomePage } from "../../pages/01_mob_home/mobHomePage.js";
 
-test("Schedule Demo Form Only", async ({ page }) => {
+test("Complete Home Page Flow", async ({ page }) => {
   const home = new MobHomePage(page);
   
   // Test: Schedule Demo Form
@@ -9,15 +9,20 @@ test("Schedule Demo Form Only", async ({ page }) => {
   await home.scheduleDemoForm();
   console.log("✅ Schedule Demo completed!");
   
-  // Try for Free Form - COMMENTED OUT
-  // console.log("\n🔷 Try for Free Form");
-  // await home.tryForFreeForm();
-  // console.log("✅ Try for Free completed!");
+  // Test: Try for Free Form
+  console.log("\n🔷 Try for Free Form");
+  await home.tryForFreeForm();
+  console.log("✅ Try for Free completed!");
+  
+  // Test: Link Verification
+  console.log("\n🔷 Link Verification");
+  await home.verifyLandingPageLinks();
+  console.log("✅ Link Verification completed!");
   
   // Generate report
   console.log("\n📄 Generating report...");
   home.reportUtils.generateCSVReport();
   home.reportUtils.generateCombinedHTMLReport();
   
-  console.log("🎯 Schedule Demo test completed!");
+  console.log("🎯 All tests completed!");
 });
