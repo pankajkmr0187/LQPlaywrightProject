@@ -228,7 +228,7 @@ class GlobalReport {
     const folderRows = folderDetails.map((f, i) => `
 <tr>
   <td style="font-weight:bold;">${i + 1}</td>
-  <td style="text-align:left;"><a href="${f.htmlPath}" target="_blank">${f.folder}</a></td>
+  <td style="text-align:left;">${f.folder}</td>
   <td>${f.fields}</td>
   <td style="color:#4CAF50;font-weight:bold;">${f.passed}</td>
   <td style="color:#f44336;font-weight:bold;">${f.failed}</td>
