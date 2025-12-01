@@ -36,8 +36,6 @@ export class WebsiteManagementPage extends BasePage {
     console.log("✅ Website Management page verification completed successfully!");
   }
 }
-
-    const csvDir = path.join(baseReportDir, "csv_files", "03_mob_k12");
     const screenshotDir = path.join(baseReportDir, "screenshots", "03_mob_k12");
     
     if (!fs.existsSync(csvDir)) {

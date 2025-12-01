@@ -38,8 +38,6 @@ export class SchoolERPSoftwarePage extends BasePage {
     console.log("✅ School ERP Software page verification completed successfully!");
   }
 }
-
-    const csvDir = path.join(baseReportDir, "csv_files", "03_mob_k12");
     const screenshotDir = path.join(baseReportDir, "screenshots", "03_mob_k12");
     
     if (!fs.existsSync(csvDir)) {
