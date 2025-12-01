@@ -36,12 +36,6 @@ export class WebsiteManagementPage extends BasePage {
     console.log("✅ Website Management page verification completed successfully!");
   }
 }
-    }
-    if (!fs.existsSync(screenshotDir)) {
-      fs.mkdirSync(screenshotDir, { recursive: true });
-    }
-
-    // Delete old Website Management files
     console.log("🧹 Cleaning old Website Management files...");
     if (fs.existsSync(csvDir)) {
       const files = fs.readdirSync(csvDir);

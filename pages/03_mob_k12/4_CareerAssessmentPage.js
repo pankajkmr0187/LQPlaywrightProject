@@ -36,12 +36,6 @@ export class CareerAssessmentPage extends BasePage {
     console.log("✅ Career Assessment page verification completed successfully!");
   }
 }
-    }
-    if (!fs.existsSync(screenshotDir)) {
-      fs.mkdirSync(screenshotDir, { recursive: true });
-    }
-
-    // Delete old Career Assessment files
     console.log("🧹 Cleaning old Career Assessment files...");
     if (fs.existsSync(csvDir)) {
       const files = fs.readdirSync(csvDir);

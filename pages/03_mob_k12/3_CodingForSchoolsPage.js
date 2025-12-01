@@ -36,12 +36,6 @@ export class CodingForSchoolsPage extends BasePage {
     console.log("✅ Coding For Schools page verification completed successfully!");
   }
 }
-    }
-    if (!fs.existsSync(screenshotDir)) {
-      fs.mkdirSync(screenshotDir, { recursive: true });
-    }
-
-    // Delete old Coding for Schools files
     console.log("🧹 Cleaning old Coding files...");
     if (fs.existsSync(csvDir)) {
       const files = fs.readdirSync(csvDir);

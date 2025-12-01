@@ -36,12 +36,6 @@ export class DigitalMarketingPage extends BasePage {
     console.log("✅ Digital Marketing page verification completed successfully!");
   }
 }
-    }
-    if (!fs.existsSync(screenshotDir)) {
-      fs.mkdirSync(screenshotDir, { recursive: true });
-    }
-
-    // Delete old Digital Marketing files
     console.log("🧹 Cleaning old Digital Marketing files...");
     if (fs.existsSync(csvDir)) {
       const files = fs.readdirSync(csvDir);
