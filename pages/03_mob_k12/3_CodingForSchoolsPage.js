@@ -33,10 +33,9 @@ export class CodingForSchoolsPage extends BasePage {
     const linkVerifier = new LinkVerificationUtils(this.page);
     await linkVerifier.verifyPageLinks('Coding for Schools', 'Coding');
     
-    console.log("✅ Coding for Schools page verification completed successfully!");
+    console.log("✅ Coding For Schools page verification completed successfully!");
   }
 }
-    const screenshotDir = path.join(baseReportDir, "screenshots", "03_mob_k12");
     
     if (!fs.existsSync(csvDir)) {
       fs.mkdirSync(csvDir, { recursive: true });

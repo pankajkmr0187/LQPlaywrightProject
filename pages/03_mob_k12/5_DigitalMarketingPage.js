@@ -36,7 +36,6 @@ export class DigitalMarketingPage extends BasePage {
     console.log("✅ Digital Marketing page verification completed successfully!");
   }
 }
-    const screenshotDir = path.join(baseReportDir, "screenshots", "03_mob_k12");
     
     if (!fs.existsSync(csvDir)) {
       fs.mkdirSync(csvDir, { recursive: true });
