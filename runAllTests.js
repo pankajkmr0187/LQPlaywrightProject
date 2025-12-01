@@ -11,22 +11,21 @@ const testFolders = [
   'tests/06_mob_support'
 ];
 
-console.log('🚀 Starting all test folders execution...\n');
+console.log('🚀 Starting all test folders execution in a single run...\n');
+console.log(`📁 Running tests in: ${testFolders.join(' ')}\n`);
+console.log('='.repeat(70));
 
-testFolders.forEach((folder, index) => {
-  console.log(`\n📁 Running tests in: ${folder} (${index + 1}/${testFolders.length})`);
-  console.log('='.repeat(50));
-  
-  try {
-    execSync(`npx playwright test ${folder}`, { 
-      stdio: 'inherit',
-      cwd: process.cwd()
-    });
-    console.log(`✅ ${folder} - PASSED`);
-  } catch (error) {
-    console.log(`❌ ${folder} - FAILED`);
-    console.log(`Error: ${error.message}`);
-  }
-});
+try {
+  // Run all folders in a single Playwright command
+  execSync(`npx playwright test ${testFolders.join(' ')}`, { 
+    stdio: 'inherit',
+    cwd: process.cwd()
+  });
+  console.log('\n✅ All tests completed successfully!');
+} catch (error) {
+  console.log('\n❌ Some tests failed');
+  console.log(`Error: ${error.message}`);
+  process.exit(1); // Exit with error code for CI/CD
+}
 
 console.log('\n🏁 All test folders execution completed!');
