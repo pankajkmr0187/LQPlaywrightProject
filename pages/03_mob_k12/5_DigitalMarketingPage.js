@@ -36,8 +36,6 @@ export class DigitalMarketingPage extends BasePage {
     console.log("✅ Digital Marketing page verification completed successfully!");
   }
 }
-    
-    if (!fs.existsSync(csvDir)) {
       fs.mkdirSync(csvDir, { recursive: true });
     }
     if (!fs.existsSync(screenshotDir)) {
