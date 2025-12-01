@@ -3,7 +3,7 @@ import { LinkVerificationUtils } from "../../utils/linkVerificationUtils.js";
 
 export class AdvancedLMSPage extends BasePage {
   constructor(page) {
-    super(page);
+    super(page, "AdvancedLMS_K12");
 
 
     this.k12Link = 'a.hfe-menu-item:has-text("K12")';

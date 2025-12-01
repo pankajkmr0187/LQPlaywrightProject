@@ -4,7 +4,7 @@ import { LinkVerificationUtils } from "../../utils/linkVerificationUtils.js";
 
 export class CareerAssessmentPage extends BasePage {
   constructor(page) {
-    super(page);
+    super(page, "Career_Higher");
 
     this.higherEducationLink = 'a.hfe-menu-item:has-text("Higher Education")';
     this.careerAssessmentLink = '/html/body/div[1]/header/div/div[3]/div/div[1]/div/div/nav/ul/li[3]/ul/li[7]/a';

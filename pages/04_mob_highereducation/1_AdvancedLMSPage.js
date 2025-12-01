@@ -4,7 +4,7 @@ import { LinkVerificationUtils } from "../../utils/linkVerificationUtils.js";
 
 export class AdvancedLMSPage extends BasePage {
   constructor(page) {
-    super(page);
+    super(page, "AdvancedLMS_Higher");
 
     // ✅ Only keep page-specific locators now
     this.higherEducationLink = 'a.hfe-menu-item:has-text("Higher Education")';

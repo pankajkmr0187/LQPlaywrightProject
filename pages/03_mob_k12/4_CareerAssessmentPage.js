@@ -4,7 +4,7 @@ import path from "path";
 
 export class CareerAssessmentPage extends BasePage {
   constructor(page) {
-    super(page);
+    super(page, "Career_K12");
 
 
     this.k12Link = 'a.hfe-menu-item:has-text("K12")';
