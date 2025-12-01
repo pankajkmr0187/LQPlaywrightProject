@@ -1,6 +1,5 @@
 import { BasePage } from "../BasePage.js";
-import fs from "fs";
-import path from "path";
+import { LinkVerificationUtils } from "../../utils/linkVerificationUtils.js";
 
 export class CodingForSchoolsPage extends BasePage {
   constructor(page) {
@@ -30,7 +29,14 @@ export class CodingForSchoolsPage extends BasePage {
     const currentUrl = this.page.url();
     console.log(`🌐 Current URL: ${currentUrl}`);
 
-    const baseReportDir = "Reports";
+    // Use LinkVerificationUtils for link verification
+    const linkVerifier = new LinkVerificationUtils(this.page);
+    await linkVerifier.verifyPageLinks('Coding for Schools', 'Coding');
+    
+    console.log("✅ Coding for Schools page verification completed successfully!");
+  }
+}
+
     const csvDir = path.join(baseReportDir, "csv_files", "03_mob_k12");
     const screenshotDir = path.join(baseReportDir, "screenshots", "03_mob_k12");
     

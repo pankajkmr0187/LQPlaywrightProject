@@ -1,6 +1,5 @@
 import { BasePage } from "../BasePage.js";
-import fs from "fs";
-import path from "path";
+import { LinkVerificationUtils } from "../../utils/linkVerificationUtils.js";
 
 export class SchoolERPSoftwarePage extends BasePage {
   constructor(page) {
@@ -26,13 +25,20 @@ export class SchoolERPSoftwarePage extends BasePage {
     console.log("✅ School ERP Software page opened!");
   }
 
-  // ✅ Step 3: Verify School ERP links with CSV report
+  // ✅ Step 3: Verify School ERP page content
   async verifySchoolERPSoftwarePageContent() {
     console.log("🔍 Verifying School ERP Software page...");
     const currentUrl = this.page.url();
     console.log(`🌐 Current URL: ${currentUrl}`);
 
-    const baseReportDir = "Reports";
+    // Use LinkVerificationUtils for link verification
+    const linkVerifier = new LinkVerificationUtils(this.page);
+    await linkVerifier.verifyPageLinks('School ERP Software', 'SchoolERP');
+    
+    console.log("✅ School ERP Software page verification completed successfully!");
+  }
+}
+
     const csvDir = path.join(baseReportDir, "csv_files", "03_mob_k12");
     const screenshotDir = path.join(baseReportDir, "screenshots", "03_mob_k12");
     
