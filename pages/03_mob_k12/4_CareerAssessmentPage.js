@@ -36,7 +36,6 @@ export class CareerAssessmentPage extends BasePage {
     console.log("✅ Career Assessment page verification completed successfully!");
   }
 }
-      fs.mkdirSync(csvDir, { recursive: true });
     }
     if (!fs.existsSync(screenshotDir)) {
       fs.mkdirSync(screenshotDir, { recursive: true });

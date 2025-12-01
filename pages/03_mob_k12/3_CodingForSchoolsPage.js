@@ -36,7 +36,6 @@ export class CodingForSchoolsPage extends BasePage {
     console.log("✅ Coding For Schools page verification completed successfully!");
   }
 }
-      fs.mkdirSync(csvDir, { recursive: true });
     }
     if (!fs.existsSync(screenshotDir)) {
       fs.mkdirSync(screenshotDir, { recursive: true });

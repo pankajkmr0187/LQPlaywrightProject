@@ -36,7 +36,6 @@ export class WebsiteManagementPage extends BasePage {
     console.log("✅ Website Management page verification completed successfully!");
   }
 }
-      fs.mkdirSync(csvDir, { recursive: true });
     }
     if (!fs.existsSync(screenshotDir)) {
       fs.mkdirSync(screenshotDir, { recursive: true });
