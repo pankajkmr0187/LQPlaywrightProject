@@ -52,7 +52,7 @@ export class DigitalMarketingPage extends BasePage {
     console.log("✅ Back to top!");
 
     const linkVerifier = new LinkVerificationUtils(this.page);
-    await linkVerifier.verifyPageLinks('Digital Marketing', 'DigitalMarketing');
+    await linkVerifier.verifyPageLinks('Digital Marketing', 'Digital_Higher');
     
     console.log("✅ Digital Marketing page verification complete!");
   }

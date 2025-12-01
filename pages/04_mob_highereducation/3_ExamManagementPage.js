@@ -52,7 +52,7 @@ export class ExamManagementPage extends BasePage {
     console.log("✅ Back to top!");
 
     const linkVerifier = new LinkVerificationUtils(this.page);
-    await linkVerifier.verifyPageLinks('Exam Management', 'ExamManagement');
+    await linkVerifier.verifyPageLinks('Exam Management', 'Exam_Higher');
     
     console.log("✅ Exam Management page verification complete!");
   }

@@ -4,7 +4,7 @@ import { LinkVerificationUtils } from "../../utils/linkVerificationUtils.js";
 
 export class MobSupportPage extends BasePage {
   constructor(page) {
-    super(page);
+    super(page, "Support");
 
     // Hamburger menu element (Support)
     this.supportLink = 'a.hfe-menu-item[href="https://learnqoch.com/support/"]';

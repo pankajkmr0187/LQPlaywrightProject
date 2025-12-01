@@ -15,9 +15,9 @@ export class LinkVerificationUtils {
     });
   }
 
-  async verifyPageLinks(pageName, folderName = "HomePage") {
+  async verifyPageLinks(pageName, shortName = "HomePage") {
     console.log(`🔍 Starting smart link verification for ${pageName}...`);
-    const reportUtils = new ReportUtils(this.page, folderName);
+    const reportUtils = new ReportUtils(this.page, shortName);
 
     const links = await this.page.evaluate(() => {
       const all = Array.from(document.querySelectorAll("a[href]"));

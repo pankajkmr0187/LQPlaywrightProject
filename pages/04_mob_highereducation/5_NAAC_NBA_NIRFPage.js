@@ -4,7 +4,7 @@ import { LinkVerificationUtils } from "../../utils/linkVerificationUtils.js";
 
 export class NAAC_NBA_NIRFPage extends BasePage {
   constructor(page) {
-    super(page);
+    super(page, "NAAC_Higher");
 
     this.higherEducationLink = 'a.hfe-menu-item:has-text("Higher Education")';
     this.naacNbaNirfLink = '/html/body/div[1]/header/div/div[3]/div/div[1]/div/div/nav/ul/li[3]/ul/li[5]/a';
@@ -52,7 +52,7 @@ export class NAAC_NBA_NIRFPage extends BasePage {
     console.log("✅ Back to top!");
 
     const linkVerifier = new LinkVerificationUtils(this.page);
-    await linkVerifier.verifyPageLinks('NAAC NBA NIRF', 'NAACNBANIRF');
+    await linkVerifier.verifyPageLinks('NAAC NBA NIRF', 'NAAC_Higher');
     
     console.log("✅ NAAC NBA NIRF page verification complete!");
   }

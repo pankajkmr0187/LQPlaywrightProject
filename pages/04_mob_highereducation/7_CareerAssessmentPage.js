@@ -52,7 +52,7 @@ export class CareerAssessmentPage extends BasePage {
     console.log("✅ Back to top!");
 
     const linkVerifier = new LinkVerificationUtils(this.page);
-    await linkVerifier.verifyPageLinks('Career Assessment', 'CareerAssessment');
+    await linkVerifier.verifyPageLinks('Career Assessment', 'Career_Higher');
     
     console.log("✅ Career Assessment page verification complete!");
   }

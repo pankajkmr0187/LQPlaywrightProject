@@ -4,7 +4,7 @@ import { LinkVerificationUtils } from "../../utils/linkVerificationUtils.js";
 
 export class HEIERPSoftwarePage extends BasePage {
   constructor(page) {
-    super(page);
+    super(page, "HEIERP_Higher");
 
     this.higherEducationLink = 'a.hfe-menu-item:has-text("Higher Education")';
     this.heiERPLink = '/html/body/div[1]/header/div/div[3]/div/div[1]/div/div/nav/ul/li[3]/ul/li[2]/a';
@@ -52,7 +52,7 @@ export class HEIERPSoftwarePage extends BasePage {
     console.log("✅ Back to top!");
 
     const linkVerifier = new LinkVerificationUtils(this.page);
-    await linkVerifier.verifyPageLinks('HEI ERP Software', 'HEIERP');
+    await linkVerifier.verifyPageLinks('HEI ERP Software', 'HEIERP_Higher');
     
     console.log("✅ HEI ERP Software page verification complete!");
   }

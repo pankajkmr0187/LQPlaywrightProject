@@ -28,7 +28,7 @@ export class CareerAssessmentPage extends BasePage {
 
     // Use LinkVerificationUtils for link verification
     const linkVerifier = new LinkVerificationUtils(this.page);
-    await linkVerifier.verifyPageLinks('Career Assessment', 'CareerAssessment');
+    await linkVerifier.verifyPageLinks('Career Assessment', 'Career_K12');
     
     console.log("✅ Career Assessment page verification completed successfully!");
   }

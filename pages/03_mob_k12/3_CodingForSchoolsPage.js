@@ -28,7 +28,7 @@ export class CodingForSchoolsPage extends BasePage {
 
     // Use LinkVerificationUtils for link verification
     const linkVerifier = new LinkVerificationUtils(this.page);
-    await linkVerifier.verifyPageLinks('Coding for Schools', 'Coding');
+    await linkVerifier.verifyPageLinks('Coding for Schools', 'Coding_K12');
     
     console.log("✅ Coding For Schools page verification completed successfully!");
   }

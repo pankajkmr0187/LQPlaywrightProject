@@ -5,13 +5,14 @@ import path from "path";
 
 export class MobBlogsPage extends BasePage {
   constructor(page) {
-    super(page);
+    super(page, "Blogs");
 
     this.blogsLink = 'a.hfe-menu-item[href="https://learnqoch.com/blogs/"]';
     this.eachBlogLink = "a.blogLink";
     this.moreTopicLinks = "a.more-topics";
 
-    this.reportDir = "Reports/BlogFailures";
+    // Use test-reports structure via reportUtils from BasePage
+    this.reportDir = this.reportUtils?.screenshotDir || "test-reports/05_mob_blogs/screenshots";
     if (!fs.existsSync(this.reportDir)) {
       fs.mkdirSync(this.reportDir, { recursive: true });
     }

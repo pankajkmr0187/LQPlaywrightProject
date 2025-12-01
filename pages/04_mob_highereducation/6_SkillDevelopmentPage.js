@@ -52,7 +52,7 @@ export class SkillDevelopmentPage extends BasePage {
     console.log("✅ Back to top!");
 
     const linkVerifier = new LinkVerificationUtils(this.page);
-    await linkVerifier.verifyPageLinks('Skill Development', 'SkillDevelopment');
+    await linkVerifier.verifyPageLinks('Skill Development', 'Skill_Higher');
     
     console.log("✅ Skill Development page verification complete!");
   }

@@ -28,7 +28,7 @@ export class DigitalMarketingPage extends BasePage {
 
     // Use LinkVerificationUtils for link verification
     const linkVerifier = new LinkVerificationUtils(this.page);
-    await linkVerifier.verifyPageLinks('Digital Marketing', 'DigitalMarketing');
+    await linkVerifier.verifyPageLinks('Digital Marketing', 'Digital_K12');
     
     console.log("✅ Digital Marketing page verification completed successfully!");
   }

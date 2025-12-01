@@ -33,7 +33,7 @@ export class AdvancedLMSPage extends BasePage {
 
     // Use LinkVerificationUtils for link verification
     const linkVerifier = new LinkVerificationUtils(this.page);
-    await linkVerifier.verifyPageLinks('Advanced LMS', 'AdvancedLMS');
+    await linkVerifier.verifyPageLinks('Advanced LMS', 'AdvancedLMS_K12');
     
     console.log("✅ Advanced LMS page verification completed successfully!");
   }

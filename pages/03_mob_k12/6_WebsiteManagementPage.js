@@ -28,7 +28,7 @@ export class WebsiteManagementPage extends BasePage {
 
     // Use LinkVerificationUtils for link verification
     const linkVerifier = new LinkVerificationUtils(this.page);
-    await linkVerifier.verifyPageLinks('Website Management', 'WebsiteManagement');
+    await linkVerifier.verifyPageLinks('Website Management', 'Website_K12');
     
     console.log("✅ Website Management page verification completed successfully!");
   }

@@ -4,7 +4,7 @@ import { LinkVerificationUtils } from "../../utils/linkVerificationUtils.js";
 
 export class OBEPage extends BasePage {
   constructor(page) {
-    super(page);
+    super(page, "OBE_Higher");
 
     this.higherEducationLink = 'a.hfe-menu-item:has-text("Higher Education")';
     this.obeLink = '/html/body/div[1]/header/div/div[3]/div/div[1]/div/div/nav/ul/li[3]/ul/li[4]/a';
@@ -52,7 +52,7 @@ export class OBEPage extends BasePage {
     console.log("✅ Back to top!");
 
     const linkVerifier = new LinkVerificationUtils(this.page);
-    await linkVerifier.verifyPageLinks('OBE', 'OBE');
+    await linkVerifier.verifyPageLinks('OBE', 'OBE_Higher');
     
     console.log("✅ OBE page verification complete!");
   }

@@ -25,7 +25,7 @@ import nodemailer from "nodemailer";
 
     const timestamp = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
 
-    const subject = `${testStatus === "FAILED" ? "❌ FAILED" : "✔ PASSED"} – Playwright Report (${timestamp})`;
+    const subject = `${testStatus === "FAILED" ? "❌ FAILED" : "✔ PASSED"} – Daily LQ Website Test Report (${timestamp})`;
 
     const html = `
       <div style="font-family:Arial;padding:20px;">

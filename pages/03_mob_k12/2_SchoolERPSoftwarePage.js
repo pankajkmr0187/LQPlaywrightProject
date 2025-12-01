@@ -33,7 +33,7 @@ export class SchoolERPSoftwarePage extends BasePage {
 
     // Use LinkVerificationUtils for link verification
     const linkVerifier = new LinkVerificationUtils(this.page);
-    await linkVerifier.verifyPageLinks('School ERP Software', 'SchoolERP');
+    await linkVerifier.verifyPageLinks('School ERP Software', 'SchoolERP_K12');
     
     console.log("✅ School ERP Software page verification completed successfully!");
   }
